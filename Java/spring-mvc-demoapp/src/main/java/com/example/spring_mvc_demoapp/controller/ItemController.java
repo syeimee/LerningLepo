@@ -47,7 +47,7 @@ public class ItemController {
      */
     @GetMapping("/")
     public String getItems(Model model) {
-        model.addAttribute("item", items);
+        model.addAttribute("items", items);
         return "items";
     }
 
@@ -61,7 +61,7 @@ public class ItemController {
     @PostMapping("/update/{id}")
     public String updateItem(@PathVariable int id, @RequestParam String newItem,Model model) {
 
-        if(id >= 0 && id <= items.size()){
+        if(id >= 0 && id < items.size()){
             items.set(id,newItem);
         }
 
@@ -78,7 +78,7 @@ public class ItemController {
     @PostMapping("/delete/{id}")
     public String deleteItem(@PathVariable int id, Model model) {
 
-        if(id >= 0 && id <= items.size()){
+        if(id >= 0 && id < items.size()){
             items.remove(id);
         }
 

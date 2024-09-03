@@ -32,7 +32,7 @@
     <p th:if="${#lists.isEmpty(items)}">アイテムがありません。</p>
 
     <!-- アイテムの追加フォーム -->
-    <form action="/items/add" method="post">
+    <form action="@{/items/add}" method="post">
         <input type="text" name="item" placeholder="追加するアイテム">
         <button type="submit">追加</button>
     </form>
