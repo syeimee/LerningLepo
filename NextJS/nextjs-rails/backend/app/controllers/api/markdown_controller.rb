@@ -1,6 +1,6 @@
 require 'open-uri'
 require 'nokogiri'
-require 'json'
+require 'kramdown'
 
 class Api::MarkdownController < ApplicationController
   def convert
@@ -9,8 +9,8 @@ class Api::MarkdownController < ApplicationController
 
     begin
       content = extract_content(url)
-      markdown = clean_up_markdown(content)
-      render json: {markdown: markdown}
+      html = convert_markdown_to_html(content)
+      render json: { html: html }
     rescue OpenURI::HTTPError => e
       render json: { error: "URLの取得に失敗しました: #{e.message}" }, status: :unprocessable_entity
     rescue StandardError => e
@@ -23,31 +23,41 @@ class Api::MarkdownController < ApplicationController
   def extract_content(url)
     html = URI.open(url).read
     doc = Nokogiri::HTML(html)
-    allowed_tags = %w[h1 h2 h3 h4 h5 h6 p em strong i b blockquote code img hr li ol ul table tr th td br figure]
-
-    doc.css(allowed_tags.join(', ')).map do |element|
+    allowed_tags = %w[h1 h2 h3 h4 h5 h6 p em strong i b blockquote code img hr table tr th td br figure a]
+  
+    content = doc.css(allowed_tags.join(', ')).map do |element|
+      cleaned_element = clean_element(element)
       case element.name
       when 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
-        level = element.name[1].to_i  # 'h1'〜'h6' の数字部分を取得
-        "#{'#' * level} #{element.content.strip} \n"  # Markdownのヘッダ形式に変換
+        level = element.name[1].to_i
+        "\n\n#{cleaned_element.to_html.sub('>', ">#{('#' * level)} ")}"
+      when 'p'
+        text = cleaned_element.inner_html.gsub(/<code>(.*?)<\/code>/, '`\1`')
+        "\n\n<p>#{text}</p>"
+      when 'blockquote'
+        "\n\n#{cleaned_element.to_html.sub('>', '>> ')}"
       when 'img'
-        element['alt'] ? "![#{element['alt']}](#{element['src']}) \n" : ''
-      when 'a'
-        "[#{element.content.strip}](#{element['href']}) \n"  # リンクのMarkdown形式
-      when 'br'
-        "\n"  # 改行
-      else
-        "#{element.content.strip} \n"  # その他のタグの処理
+        alt_text = element['alt'] || 'Image'
+        "[Image: #{alt_text}]"
       end
-    end.join("\n")
+    end.join
+  
+    "<div class='markdown-content'>#{content}</div>"
   end
 
-  def clean_up_markdown(content)
-    content
-      .gsub(/[\n\t]+/, " \n ")  # 連続する改行やタブを単一の改行に置換
-      .gsub(/\n{3,}/, " \n \n ")  # 3つ以上連続する改行を2つに
-      .gsub(/^\s+|\s+$/, '')   # 行頭と行末の空白を削除
-      .gsub(/\n +/, " \n ")      # 行頭のスペースを削除
-      .strip  # 前後の空白を削除
+  def clean_element(element)
+    case element.name
+    when 'a'
+      element.attributes.each { |attr, _| element.remove_attribute(attr) unless ['href'].include?(attr) }
+    when 'img'
+      element.attributes.each { |attr, _| element.remove_attribute(attr) unless ['src', 'alt'].include?(attr) }
+    else
+      element.attributes.each { |attr, _| element.remove_attribute(attr) }
+    end
+    element
+  end
+
+  def convert_markdown_to_html(content)
+    Kramdown::Document.new(content).to_html
   end
 end

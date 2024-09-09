@@ -6,7 +6,7 @@ import MarkdownViewer from "@/components/MarkdownViewer";
 
 export default function Home(){
     const [url, setUrl] = useState('');
-    const [markdown, setMarkdown] = useState('');
+    const [html, setHtml] = useState('');
     
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) =>{
         const url = e.target.value;
@@ -18,9 +18,7 @@ export default function Home(){
 
         try{
             const response = await axios.post('http://localhost:3001/api/convert', {url})
-            console.info("####RESPONSE BODY####");
-            console.info(response.data.markdown);
-            setMarkdown(response.data.markdown);
+            setHtml(response.data.html);
 
         }catch(error){
             console.error("HTMLからMarkdownの変換に失敗しました", error);
@@ -36,7 +34,7 @@ export default function Home(){
               <input type="text" value={url} placeholder="URLを入力" onChange={onChange} className="w-full max-w-md p-2 border  text-gray-700 focus:text-black  border-gray-300 rounded"/>
               <button type="submit" className="px-4 py-2 bg-light-blue text-white rounded hover:bg-yellow-300 transition">CONVERT</button>
             </form>
-            {markdown && <MarkdownViewer markdown={markdown}/>}
+            {html && <MarkdownViewer html={html} url={url}/>}
           </div>
         </div>
     );
