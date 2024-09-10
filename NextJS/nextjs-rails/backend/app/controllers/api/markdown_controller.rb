@@ -23,7 +23,7 @@ class Api::MarkdownController < ApplicationController
   def extract_content(url)
     html = URI.open(url).read
     doc = Nokogiri::HTML(html)
-    allowed_tags = %w[h1 h2 h3 h4 h5 h6 p em strong i b blockquote code img hr table tr th td br figure a]
+    allowed_tags = %w[ul li h1 h2 h3 h4 h5 h6 p em strong i b blockquote code img hr table tr th td br figure a]
   
     content = doc.css(allowed_tags.join(', ')).map do |element|
       cleaned_element = clean_element(element)
@@ -31,6 +31,8 @@ class Api::MarkdownController < ApplicationController
       when 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
         level = element.name[1].to_i
         "\n\n#{cleaned_element.to_html.sub('>', ">#{('#' * level)} ")}"
+      when 'li'
+        "\n\n#{cleaned_element.to_html.sub('>', "> - ")}"
       when 'p'
         text = cleaned_element.inner_html.gsub(/<code>(.*?)<\/code>/, '`\1`')
         "\n\n<p>#{text}</p>"
