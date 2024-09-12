@@ -17,13 +17,15 @@ const MarkdownViewer: React.FC<MarkdownViewerProps> = ({ html, url }) => {
 
   return (
     <div className='items-end justify-end'>
-      <h2 className='text-left'>出力結果</h2>
-      <button 
-        onClick={handleCopy} 
-        className={`px-4 py-2 rounded ${copied ? 'bg-green-500' : 'bg-blue-500 hover:bg-blue-700'} text-white transition`}
-      >COPY</button>
-      <div className="markdown-content text-left bg-slate-700" dangerouslySetInnerHTML={{ __html: html }} />
-      <p>引用: {url}</p>
+      <h2 className='mt-4 text-center text-3xl'>出力結果</h2>
+      <div className='mt-4 bg-blue-950'>
+        <button 
+          onClick={handleCopy} 
+          className={`items-end justify-end mt-2 px-4 py-1 rounded ${copied ? 'bg-green-500' : 'bg-blue-500 hover:bg-blue-700'} text-white transition`}
+          >COPY</button>
+        <div className="markdown-content text-left" dangerouslySetInnerHTML={{ __html: html }} />
+        <p>引用: {url}</p>
+      </div>
     </div>
   );
 };
