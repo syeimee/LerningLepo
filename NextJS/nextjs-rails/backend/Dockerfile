@@ -1,27 +1,27 @@
-# backend/Dockerfile
+# ruby 3.2 イメージをベースに使用する
 FROM ruby:3.2
 
-# Install dependencies
+# 必要な依存パッケージをインストールする
 RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
 
-# Ensure npm is installed
+# npmがインストールされていることを確認
 RUN apt-get install -y npm
 
-# Set up working directory
+# 作業ディレクトリを/appに設定する
 WORKDIR /app
 
-# Install Rails dependencies
+# Rails の依存関係をインストールするために Gemfile をコピーする
 COPY Gemfile /app/Gemfile
 COPY Gemfile.lock /app/Gemfile.lock
 RUN bundle install
 
-# Install Node.js dependencies using npm
+# npmを使って Node.js の依存関係をインストールする
 COPY package.json /app/package.json
 COPY package-lock.json /app/package-lock.json
 RUN npm install
 
-# Copy the main application
+# アプリケーションのソースコード全体をコピーする
 COPY . /app
 
-# Start the server
+# サーバーを起動する前に、PIDファイルが残っていたら削除し、Railsサーバーを起動する
 CMD rm -f /app/tmp/pids/server.pid && rails s -b 0.0.0.0 -p 3001

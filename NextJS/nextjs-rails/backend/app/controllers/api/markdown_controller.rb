@@ -3,6 +3,11 @@ require 'nokogiri'
 require 'kramdown'
 
 class Api::MarkdownController < ApplicationController
+
+  # URLからHTMLコンテンツを取得し、Markdown記号を埋め込んだHTMLとしてJSONレスポンスとして返す。
+  #
+  # @return [JSON] JSON形式で変換後のMarkdownコンテンツまたはエラーメッセージを返す。
+  #
   def convert
     url = params[:url]
     return render json: { error: 'URLを入力してください。' }, status: :bad_request if url.blank?
@@ -20,13 +25,19 @@ class Api::MarkdownController < ApplicationController
 
   private
 
+  # 指定されたURLからHTMLを抽出し、許可されたHTMLタグをMarkdown形式に変換する。
+  #
+  # @param url [String] HTMLコンテンツを取得するためのURL。
+  # @return [String] Markdown形式に変換されたコンテンツをdivでラップして返す。
+  #
   def extract_content(url)
     html = URI.open(url).read
     doc = Nokogiri::HTML(html)
     allowed_tags = %w[ul li h1 h2 h3 h4 h5 h6 p em strong i b blockquote code img hr table tr th td br figure a]
-  
+    
     content = doc.css(allowed_tags.join(', ')).map do |element|
       cleaned_element = clean_element(element)
+      
       case element.name
       when 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
         level = element.name[1].to_i
@@ -41,12 +52,16 @@ class Api::MarkdownController < ApplicationController
       when 'img'
         alt_text = element['alt'] || 'Image'
         "[Image: #{alt_text}]"
-      end
     end.join
   
     "<div class='markdown-content'>#{content}</div>"
   end
 
+  # HTML要素から不要な属性を削除する。
+  #
+  # @param element [Nokogiri::XML::Element] クリーンアップするHTML要素。
+  # @return [Nokogiri::XML::Element] 不要な属性が削除されたHTML要素。
+  #
   def clean_element(element)
     case element.name
     when 'a'
@@ -59,6 +74,11 @@ class Api::MarkdownController < ApplicationController
     element
   end
 
+  # Markdown形式のコンテンツをHTML形式に変換する。
+  #
+  # @param content [String] 変換するMarkdownコンテンツ。
+  # @return [String] 変換されたHTMLコンテンツ。
+  #
   def convert_markdown_to_html(content)
     Kramdown::Document.new(content).to_html
   end
