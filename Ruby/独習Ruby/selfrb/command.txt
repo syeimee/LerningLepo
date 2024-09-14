@@ -1,0 +1,35 @@
+# Homebrewのインストール
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Homebrewのバージョン確認
+brew -v
+
+# rbenvのインストール
+brew install rbenv
+
+# rbenvのバージョン確認
+rbenv -v
+
+# rbenvの初期化（設定ファイルへの追加）
+echo 'eval "$(rbenv init -)"' >> ~/.zshrc
+
+# rbenvの初期化（設定を反映）
+source ~/.zshrc
+
+# 利用しているシェルの確認
+echo $SHELL
+
+# Rubyのインストール
+rbenv install 3.0.1
+
+# インストール可能なRubyのバージョンの一覧表示
+rbenv install -l
+
+# rbenvのアップデート
+brew upgrade rbenv ruby-build
+
+# Rubyのバージョン確認（Ruby 3.0.1の有効化）
+rbenv global 3.0.1
+
+# Rubyのバージョン確認（バージョンを確認）
+ruby -v
