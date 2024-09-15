@@ -65,36 +65,35 @@ class Api::MarkdownController < ApplicationController
   # @param url [String] HTMLコンテンツを取得するためのURL。
   # @return [String] MD記号を埋め込んだHTMLをdivでラップして返す。
   #
-def convert_markdown(url)
-  html = URI.open(url).read
-  doc = Nokogiri::HTML(html)
-  allowed_tags = %w[ul li h1 h2 h3 h4 h5 h6 p em strong i b blockquote code img hr table tr th td br figure a]
+  def convert_markdown(url)
+    html = URI.open(url).read
+    doc = Nokogiri::HTML(html)
+    allowed_tags = %w[ul li h1 h2 h3 h4 h5 h6 p em strong i b blockquote code img hr table tr th td br figure a]
 
-  markdown_content = doc.css(allowed_tags.join(', ')).map do |element|
-    cleaned_element = clean_element(element)
-    case element.name
-    when 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
-      level = element.name[1].to_i
-      "#{'#' * level} #{cleaned_element.inner_text.strip}"
-    when 'li'
-      "- #{cleaned_element.inner_text.strip}"
-    when 'p'
-      text = cleaned_element.inner_html.gsub(/<code>(.*?)<\/code>/, '`\1`')
-      "#{text}"
-    when 'blockquote'
-      "> #{cleaned_element.inner_text.strip}"
-    when 'img'
-      alt_text = element['alt'] || 'Image'
-      "![#{alt_text}](#{element['src']})"
-    when 'hr'
-      "\n---\n"
-    end
-  end.join("\n")
+    markdown_content = doc.css(allowed_tags.join(', ')).map do |element|
+      cleaned_element = clean_element(element)
+      case element.name
+      when 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
+        level = element.name[1].to_i
+        "#{'#' * level} #{cleaned_element.inner_text.strip}"
+      when 'li'
+        "- #{cleaned_element.inner_text.strip}"
+      when 'p'
+        text = cleaned_element.inner_html.gsub(/<code>(.*?)<\/code>/, '`\1`')
+        "#{text}"
+      when 'blockquote'
+        "> #{cleaned_element.inner_text.strip}"
+      when 'img'
+        alt_text = element['alt'] || 'Image'
+        "![#{alt_text}](#{element['src']})"
+      when 'hr'
+        "\n---\n"
+      end
+    end.join("\n")
 
-  markdown_content
-end
-
-
+    markdown_content
+  end
+  
   # HTML要素から不要な属性を削除する。
   #
   # @param element [Nokogiri::XML::Element] クリーンアップするHTML要素。
