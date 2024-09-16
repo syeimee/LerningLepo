@@ -71,5 +71,124 @@ void Update(){
 
 # 当たり判定の実装
 CubeにRegidbodyをつける
-Panelにcoliderがついていると当たり判定がつく
+CubeとPanelにcolliderがついていると当たり判定がつく
+どちらかのcolliderを外すと、あたり判定が解除される
 
+<img src="./img/colider1.png">
+<img src="./img/colider2.png">
+
+
+in Triggerのチェックをすると、物理判定はするが、あたり判定はしなくなる.
+判定だけ取得指定時は、以下のように記述することで、接触オブジェクトを判定することができる。
+```c#
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log(other.name); //Cube
+    }
+```
+
+活用例
+以下のコードを書く
+```c#
+private void OnTriggerEnter(Collider other){
+    if(other.gameObject.tag == "Player"){
+        Debug.Log("衝突！！");
+    }
+}
+```
+CubeオブジェクトのタグをPlayerにすることで、
+Playerが接触した時に判定するみたいなことを実装できる
+
+<img src="./img/tag.png">
+
+# アニメーションの実装
+Asset StoreからダウンロードしてきたAssetsをhierarchyに読み込むだけ
+
+<img src="./img/animation.png">
+
+# 入力値によって、アニメーションを変化させる
+-  Unity側の操作
+パラメータの設定とコンディションの設定を行う
+<img src="./img/animationsetting.png">
+<img src="./img/animationsetting2.png">
+
+```c#
+    void Start()
+    {
+        animator = GetComponent<Animator>();//コンポーネントの取得
+    }
+    void Update()
+    {
+        float x = Input.GetAxis("Horizontal");
+
+        if(x > 0){
+            animator.SetFloat("speed",x);
+        }else if(x == 0){
+            animator.SetFloat("speed",x);
+        }
+    }
+```
+# プレファブ化と生成方法
+プレファブとは、テンプレートとして保存すること
+openprefabを編集することで、すべてのオブジェクトを編集できる
+
+ゲーム再生時にプレファブをインスタンス化方法
+```c#
+    [SerializeField] GameObject playerPrefab;
+    void Start(){
+        Instantiate(playerPrefab);
+    }
+```
+<img src="./img/createplayer2.png">
+
+<img src="./img/createplayer.png">
+
+# オブジェクトの表示・非表示
+unity上では、チェックマークを外すかつけるかで切り替えができる。
+
+<img src="./img/objectDisplay.png">
+
+一般的には、GameManagerというスクリプトとemptyobjectを作り、sampleObjに非表示にしたいオブジェクトを指定してあげるとOKらしい
+```c#
+    [SerializeField] GameObject sampleObj;
+    void Start()
+    {
+        sampleObj.SetActive(false);//非表示
+    }
+```
+表示と破壊
+```c#
+sampleObj.SetActive(false);//表示
+Destroy(sampleObj)//破壊
+```
+
+# 別オブジェクトの操作方法
+
+テキストオブジェクトを取得しGameManagerで操作したい
+
+```c#
+using UnityEngine.UI;//UIを操作するため
+```
+`[SerializeField] Text titleText`とすることで外部から呼び出すことができる
+
+```c#
+[SerializeField] Text titleText;
+
+void Start(){
+    titleText.text = "";
+}
+```
+
+# シーンの読み込み
+
+import
+```c#
+using UnityEngine.SceneManagement;
+```
+
+```c#
+//SceneManager.LoadScene("呼び出したいシーン名");
+ SceneManager.LoadScene("MainScene");
+```
+スクリプトを作ったらビルドセッティングもしておく
+<img src="./img/SceneSetting.png">
