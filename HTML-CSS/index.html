@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Corporate Website</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+    header {
+      background-color: #333;
+      color: white;
+      padding: 10px 0;
+      text-align: center;
+    }
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+    }
+    nav ul li {
+      margin: 0 15px;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+    }
+    .hero {
+      background-color: #007bff;
+      color: white;
+      padding: 50px 0;
+      text-align: center;
+    }
+    .hero h2 {
+      margin: 0;
+    }
+    .hero button {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .hero button:hover {
+      background-color: #218838;
+    }
+    .services, .about {
+      padding: 50px 0;
+      text-align: center;
+    }
+    .services {
+      background-color: #f4f4f4;
+    }
+    .services .service {
+      display: inline-block;
+      width: 30%;
+      margin: 0 1%;
+      background: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .about {
+      background-color: white;
+    }
+    footer {
+      background-color: #333;
+      color: white;
+      padding: 10px 0;
+      text-align: center;
+    }
+    footer a {
+      color: white;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>My Company</h1>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h2>Welcome to Our Company</h2>
+      <p>Your success is our priority.</p>
+      <button>Learn More</button>
+    </div>
+  </section>
+
+  <section class="services" id="services">
+    <h2>Our Services</h2>
+    <div class="service">
+      <h3>Consulting</h3>
+      <p>Expert advice for your business.</p>
+    </div>
+    <div class="service">
+      <h3>Development</h3>
+      <p>Custom solutions tailored to your needs.</p>
+    </div>
+    <div class="service">
+      <h3>Support</h3>
+      <p>24/7 support to keep you running.</p>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <h2>About Us</h2>
+    <p>We are a leading company in our industry, committed to delivering the best results for our clients.</p>
+  </section>
+
+  <footer id="contact">
+    <p>&copy; 2024 My Company. All rights reserved.</p>
+    <p><a href="mailto:info@mycompany.com">Contact Us</a></p>
+  </footer>
+
+</body>
+</html>
