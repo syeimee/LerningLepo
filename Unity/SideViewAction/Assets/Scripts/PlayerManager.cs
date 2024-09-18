@@ -1,6 +1,7 @@
 using UnityEngine;
 public class PlayerManager : MonoBehaviour
 {
+    [SerializeField] GameManager gameManager;
     [SerializeField] LayerMask blockLayer;
     // 方向は列挙型で定義
     public enum DIRECTION_TYPE {
@@ -37,7 +38,10 @@ public class PlayerManager : MonoBehaviour
         }
 
         //スペースが押されたらjumpする(GetKeyDownは１回押し込んだ時のみ発動)
-        if(IsGround() && Input.GetKeyDown("space")) Jump();
+        if(IsGround() && Input.GetKeyDown("space")) {
+            Debug.Log("飛んだよ");
+            Jump();
+        }
 
     }
     
@@ -80,8 +84,14 @@ public class PlayerManager : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collision){
-        if(collision.gameObject.tag == "TRAP") Debug.Log("GAME OVER");
-        if(collision.gameObject.tag == "Finish") Debug.Log("CLEAR");
+        if(collision.gameObject.tag == "TRAP"){
+            Debug.Log("GAME OVER");
+            gameManager.GameOver();
+        }
+        if(collision.gameObject.tag == "Finish"){
+            Debug.Log("CLEAR");
+            gameManager.GameClear();
+        }
 
     }
 
