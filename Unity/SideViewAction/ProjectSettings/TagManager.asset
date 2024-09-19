@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - TRAP
+  - Item
   layers:
   - Default
   - TransparentFX

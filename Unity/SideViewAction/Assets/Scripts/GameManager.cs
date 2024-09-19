@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
         gameClearText.SetActive(true);
         Invoke("Restart",1.5f);
     }
+    
 
     void Restart(){
         Scene thisScene = SceneManager.GetActiveScene();

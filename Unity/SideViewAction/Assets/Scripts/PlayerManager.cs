@@ -93,6 +93,11 @@ public class PlayerManager : MonoBehaviour
             gameManager.GameClear();
         }
 
+        if(collision.gameObject.tag == "Item"){
+            //アイテムの取得
+            collision.gameObject.GetComponent <ItemManager>().GetItem();
+        }
+
     }
 
 
