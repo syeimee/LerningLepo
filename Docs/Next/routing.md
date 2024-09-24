@@ -1,3 +1,7 @@
+# app router
+ヘッダーやフッターなどの共通レイアウトは、src > layoutに記述
+
+```js
 /**
  * 全ページ共通のレイアウト
  */
@@ -34,10 +38,22 @@ export default function RootLayout({
         {/* Latoフォントの読み込み */}
         <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap" rel="stylesheet" />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         <Header/>
         {children}
       </body>
     </html>
   );
 }
+
+```
+
+# リンクを作るに際にはLinkコンポーネントを使う
+
+```js
+import Link from 'next/link';
+
+<Link href="/about">About</Link>
+```
