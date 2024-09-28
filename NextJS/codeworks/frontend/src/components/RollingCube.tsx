@@ -1,4 +1,5 @@
-"use client"
+// 最初のバージョン
+"use client";
 import React, { useRef, useMemo, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
@@ -29,12 +30,37 @@ const Cube: React.FC<CubeProps> = ({ position, size, color, duration, stopRate }
     const moveAxis: "x" | "z" = Math.random() > 0.5 ? "x" : "z";
     const moveOffset = Math.random() > 0.5 ? -1 : 1;
 
-    const axis = new THREE.Vector3();
+    // 移動方向に対する回転軸を求める
     const normalUnit = 1;
+    const axis = new THREE.Vector3();
     const rotAxis: "x" | "z" = moveAxis === "x" ? "z" : "x";
     axis[rotAxis] = normalUnit;
 
-    const rotDir = Math.random() > 0.5 ? -1 : 1;
+    const nextr = originPos.clone().add(axis); // Cubeの中心から、求めたい方向に1移動した座標を算出
+
+    // world座標をlocalの座標に変換
+    const rotVec = cube.worldToLocal(nextr.clone()).normalize(); // 正規化
+
+    // rot_vecからlocal軸(x, y, z)を取得
+    let localRotAxis: "x" | "y" | "z" = 'x';
+    if (Math.abs(rotVec.x) === normalUnit) localRotAxis = 'x';
+    else if (Math.abs(rotVec.y) === normalUnit) localRotAxis = 'y';
+    else if (Math.abs(rotVec.z) === normalUnit) localRotAxis = 'z';
+    
+    // axisを設定
+    const rotationAxis = new THREE.Vector3();
+    rotationAxis[localRotAxis] = normalUnit;
+
+    // Determine rotation direction
+    const axisDir = rotVec[localRotAxis];
+    let rotDir = 1;
+    if (
+      (moveAxis === 'x' && ((axisDir > 0 && moveOffset > 0) || (axisDir < 0 && moveOffset < 0))) ||
+      (moveAxis === 'z' && ((axisDir > 0 && moveOffset < 0) || (axisDir < 0 && moveOffset > 0)))
+    ) {
+      rotDir = -rotDir;
+    }
+
     const tween = new TWEEN.Tween({ x: 0 })
       .to({ x: 1 }, duration)
       .easing(TWEEN.Easing.Linear.None)
@@ -45,6 +71,8 @@ const Cube: React.FC<CubeProps> = ({ position, size, color, duration, stopRate }
         const radius = cubeHalf * Math.sqrt(2);
         const angle = 45 + 90 * x;
         const rad = (angle * Math.PI) / 180;
+
+        // Update rad with rotation direction
         const height = Math.sin(rad) * radius - cubeHalf;
         const move = (cubeHalf - Math.cos(rad) * radius) * moveOffset;
 
@@ -53,7 +81,7 @@ const Cube: React.FC<CubeProps> = ({ position, size, color, duration, stopRate }
 
         const newQuat = originQuat.clone();
         const targetQuat = new THREE.Quaternion();
-        targetQuat.setFromAxisAngle(axis, (Math.PI / 2) * x * rotDir);
+        targetQuat.setFromAxisAngle(rotationAxis, (Math.PI / 2) * x * rotDir); // Apply rotDir
         newQuat.multiply(targetQuat);
         cube.quaternion.copy(newQuat);
       })
@@ -124,7 +152,7 @@ const RollingCube: React.FC = () => {
   return (
     <div style={{ width: '50vw', height: '75vh' }}>
       <Canvas 
-        camera={{ position: [0, 30, 20], fov: 60 }}
+        camera={{ position: [0, 30, 50], fov: 60 }}
         gl={{ antialias: true }}
       >
         <OrbitControls />
