@@ -1,28 +1,28 @@
 "use client";
 
 import * as THREE from 'three';
-import { useRef, useMemo, useLayoutEffect, useState } from 'react';
+import { useRef, useMemo, useLayoutEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { CameraControls } from '@react-three/drei';
 
-const MorphingShapes = ({ length = 10000, size = [0.15, 0.15, 0.15], ...props }) => {
+const MorphingObjects = ({ length = 10000, size = [0.15, 0.15, 0.15], ...props }) => {
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const edgesRef = useRef<THREE.LineSegments>(null);
   const groupRef = useRef<THREE.Group>(null);
-  const [morphProgress, setMorphProgress] = useState(0);
-  const [morphDirection, setMorphDirection] = useState(1);
 
   const [positions, colors, spherePositions] = useMemo(() => {
     const positions = new Float32Array(length * 3);
     const colors = new Float32Array(length * 3);
     const spherePositions = new Float32Array(length * 3);
-    const radius = 5;
     for (let i = 0; i < length; i++) {
-      positions.set([Math.random() * 10 - 5, Math.random() * 10 - 5, Math.random() * 10 - 5], i * 3);
+      const [x, y, z] = [Math.random() * 10 - 5, Math.random() * 10 - 5, Math.random() * 10 - 5];
+      positions.set([x, y, z], i * 3);
       colors.set([Math.random(), Math.random(), Math.random()], i * 3);
       
+      // Calculate sphere position
+      const radius = 5;
+      const phi = Math.acos(1 - 2 * Math.random());
       const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(2 * Math.random() - 1);
       spherePositions.set([
         radius * Math.sin(phi) * Math.cos(theta),
         radius * Math.sin(phi) * Math.sin(theta),
@@ -45,27 +45,27 @@ const MorphingShapes = ({ length = 10000, size = [0.15, 0.15, 0.15], ...props })
     }
   }, [length, positions, colors]);
 
+  const morphProgress = useRef(0);
+  const morphDirection = useRef(1);
+
   useFrame((_, delta) => {
     if (groupRef.current) {
       groupRef.current.rotation.y += 0.01;
       groupRef.current.rotation.x += 0.005;
     }
 
-    setMorphProgress((prev) => {
-      const newProgress = prev + delta * 0.5 * morphDirection;
-      if (newProgress > 1 || newProgress < 0) {
-        setMorphDirection((prev) => -prev);
-        return prev;
-      }
-      return newProgress;
-    });
-
     if (meshRef.current) {
+      morphProgress.current += delta * 0.2 * morphDirection.current;
+      if (morphProgress.current >= 1 || morphProgress.current <= 0) {
+        morphDirection.current *= -1;
+      }
+
       const dummy = new THREE.Object3D();
       for (let i = 0; i < length; i++) {
-        const x = THREE.MathUtils.lerp(positions[i * 3], spherePositions[i * 3], morphProgress);
-        const y = THREE.MathUtils.lerp(positions[i * 3 + 1], spherePositions[i * 3 + 1], morphProgress);
-        const z = THREE.MathUtils.lerp(positions[i * 3 + 2], spherePositions[i * 3 + 2], morphProgress);
+        const x = THREE.MathUtils.lerp(positions[i * 3], spherePositions[i * 3], morphProgress.current);
+        const y = THREE.MathUtils.lerp(positions[i * 3 + 1], spherePositions[i * 3 + 1], morphProgress.current);
+        const z = THREE.MathUtils.lerp(positions[i * 3 + 2], spherePositions[i * 3 + 2], morphProgress.current);
+        
         dummy.position.set(x, y, z);
         dummy.updateMatrix();
         meshRef.current.setMatrixAt(i, dummy.matrix);
@@ -121,7 +121,7 @@ const Scene = () => {
       <Canvas camera={{ position: [0, 0, 12] }}>
         <ambientLight intensity={0.5} />
         <directionalLight position={[5, 5, 5]} intensity={1} />
-        <MorphingShapes />
+        <MorphingObjects />
         <CameraAnimation />
       </Canvas>
     </div>
