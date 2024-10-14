@@ -192,3 +192,83 @@ using UnityEngine.SceneManagement;
 ```
 スクリプトを作ったらビルドセッティングもしておく
 <img src="./img/SceneSetting.png">
+
+# アイテムの取得の実装
+
+**ItemManager.cs**
+
+GetItemが実行されたら、アイテムを削除する
+```c#
+using UnityEngine;
+
+public class ItemManager : MonoBehaviour
+{
+    public void GetItem(){
+        Destroy(this.gameObject);
+    }
+}
+
+```
+
+**PlayerManager.cs**
+
+PlayerMangerから`<ItemManager>`の`GetItem()`を呼び出す
+
+```c#
+if(collision.gameObject.tag == "Item"){
+    //アイテムの取得
+    collision.gameObject.GetComponent <ItemManage().GetItem();
+}
+```
+# 取得したアイテムによって得点を更新する
+UIのテキストを追加してscoreTextという名前にしておく
+
+**GameManager.cs**
+
+スコアの更新用関数
+
+```c#
+    [SerializeField] Text scoreText;
+
+    /*scoreの更新用関数
+    * 9999までは引数valの値をスコアに加算していく
+    * 9999を越えれば、強制的に9999にする
+    */
+    const int MAX_VALUE = 9999;
+    int score = 0;
+    public void addscore(int val){
+        score +=val;
+        if(score > MAX_VALUE){
+            score = MAX_VALUE;
+        }
+        scoreText.text = score.ToString(); //intを文字列に変換
+    }
+```
+
+**ItemManager.cs**
+
+取得するアイテムに更新用関数を割り当てる
+
+```c#
+    GameManager gameManager;
+
+    /*Itemへの割り当て
+    * ヒエラルキーからGameManagerを探し
+    * GetComponet<GameManager>でコンポーネントを取得する
+    */
+    void Start(){
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+    }
+
+    public void GetItem(){
+        gameManager.addscore(100);//コンポーネントを取得しているのでaddscoreが呼び出せる
+        Destroy(this.gameObject);
+    }
+
+```
+
+- 補足　GetComponent
+`GetComponent<コンポーネント名>()`
+GetComponentとは、以下の画像のように、オブジェクト内のコンポーネントを取得すること
+今回行った処理は、ヒエラルキーの中のGameManagerを取得したのと、GameManegerという名前のコンポーネントを取得している。
+<img src="./img/getcomponent.png">
