@@ -272,3 +272,66 @@ UIのテキストを追加してscoreTextという名前にしておく
 GetComponentとは、以下の画像のように、オブジェクト内のコンポーネントを取得すること
 今回行った処理は、ヒエラルキーの中のGameManagerを取得したのと、GameManegerという名前のコンポーネントを取得している。
 <img src="./img/getcomponent.png">
+
+
+# 敵キャラの実装
+
+- 敵キャラの設定
+add componentより、regidBody2dを追加。z軸方向の回転を制御（freeze rotation z）
+add componentより、circle collider 2Dを追加
+
+- スクリプトの作成
+ ** EnemyManager.cs**
+
+ PlayerManagerを活用する。jumpは実装しないので、削除
+
+```c#
+using UnityEngine;
+public class EnemyManager : MonoBehaviour
+{
+    // [SerializeField] GameManager gameManager;
+    // [SerializeField] LayerMask blockLayer;
+    // 方向は列挙型で定義
+    public enum DIRECTION_TYPE {
+        STOP,
+        RIGHT,
+        LEFT
+    }
+    Rigidbody2D rigidbody2D; // プレイヤーの移動はRigidbodyで管理
+    DIRECTION_TYPE direction = DIRECTION_TYPE.STOP;
+    float speed = 0;
+
+    private void Start() {
+        // Rigidbody2D コンポーネントを取得
+        rigidbody2D = GetComponent<Rigidbody2D>();
+
+        // 右方向へ移動
+        direction = DIRECTION_TYPE.RIGHT;
+
+    }
+
+    private void Update() {
+    }
+    
+    // FixedUpdateは定期的に呼ばれる。物理計算はここで行う。
+    private void FixedUpdate() {
+        // 方向に応じて速さを定義する
+        switch (direction) {
+            case DIRECTION_TYPE.STOP:
+                speed = 0;
+                break;
+            case DIRECTION_TYPE.RIGHT:
+                speed = 3;
+                transform.localScale = new Vector3(1, 1, 1);//向きを右へ
+                break;
+            case DIRECTION_TYPE.LEFT:
+                speed = -3;
+                transform.localScale = new Vector3(-1, 1, 1);//向きを左へ
+                break;
+        }
+        // Rigidbody2Dの速度を更新
+        rigidbody2D.velocity = new Vector2(speed, rigidbody2D.velocity.y);
+    }
+}
+
+```
