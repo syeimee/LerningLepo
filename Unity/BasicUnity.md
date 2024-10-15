@@ -335,3 +335,56 @@ public class EnemyManager : MonoBehaviour
 }
 
 ```
+# 敵キャラクターの攻撃実装
+
+敵キャラクターにTagをつけておく
+<img src="./img/enemy.png">
+
+敵キャラクターに当たり判定をつける
+boxcolliderをつけ、isTriggerを有効にする
+<img src="./img/enemy2.png">
+
+**PlayerManager.cs**
+
+```c#
+if(colllision.gameObject.tag == "Enemy"){
+    EnemyManager enemy = collision.gameObject.GetComponent<EnemyManager>();
+
+    if(this.transform.position.y + 0.2f> enemy.transform.position.y){
+        //上から踏んだら敵を削除
+        enemy.DestroyEnemy();
+    }else{
+        //横からぶつかったらゲームオーバ０
+        Destroy(this.gameObject);
+        gameManager.GameOver();
+    }
+}
+```
+**EnemyManager.cs**
+
+```c#
+public void DestroyEnemy(){
+    Destroy(this.gameObject);
+}
+```
+
+ここからさらに、プレイヤーが敵を踏んだら跳ねるモーションを加える
+**PlayerManager.cs**
+
+```c#
+if(colllision.gameObject.tag == "Enemy"){
+    EnemyManager enemy = collision.gameObject.GetComponent<EnemyManager>();
+
+    if(this.transform.position.y + 0.2f> enemy.transform.position.y){
+        //上から踏んだら踏む瞬間は速度を０にしてジャンプ
+        rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0);
+        Jump();
+        //敵を削除
+        enemy.DestroyEnemy();
+    }else{
+        //横からぶつかったらゲームオーバ０
+        Destroy(this.gameObject);
+        gameManager.GameOver();
+    }
+}
+```
