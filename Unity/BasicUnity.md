@@ -388,3 +388,35 @@ if(colllision.gameObject.tag == "Enemy"){
     }
 }
 ```
+
+# カメラの追従実装
+カメラの追従にはcinemachine virtual cameraを使う
+
+packagemanageよりインストール
+<img src="./img/cinemachine.png">
+
+playerを追従させる
+<img src="./img/cinemachine2.png">
+
+レンズ値を変更してカメラを近づける
+<img src="./img/cinemachine3.png">
+
+# カメラの境界設定
+1. emptyを作成して、Confinerと命名
+2. ConfinerにPolygon Colider 2Dを割り当てる
+<img src="./img/Confiner.png">
+
+3. Pointsのpathのelement 0のSizeを4に変更
+4. Edit Colliderクリックし、4つの頂点をステージの限界領域に設定する
+<img src="./img/Confiner2.png">
+
+5. 拡張機能追加して、confinerを追加する
+<img src="./img/Confiner3.png">
+<img src="./img/Confiner4.png">
+6. confinerレイヤーを用意する
+（これがないとconfinerに当たり判定がついておりうまく動作しない）
+<img src="./img/Confiner5.png">
+
+7. confinerレイヤーの当たり判定をなくす
+<img src="./img/Confiner6.png">
+<img src="./img/Confiner7.png">
