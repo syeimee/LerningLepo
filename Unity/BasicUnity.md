@@ -420,3 +420,17 @@ playerを追従させる
 7. confinerレイヤーの当たり判定をなくす
 <img src="./img/Confiner6.png">
 <img src="./img/Confiner7.png">
+
+# プレイヤーが壁に引っかかるバグの修正
+壁に引っかかる原因は
+- 摩擦がかかっている
+- 当たり判定が広すぎる
+の2点を解決する
+
+1. 摩擦をなくす
+Physics Material 2DをPlayerのBoxColliderにアタッチする
+<img src="./img/physicsMaterial2d.png">
+
+2. 当たり判定を狭める
+<img src="./img/atari.png">
+<img src="./img/atari2.png">
