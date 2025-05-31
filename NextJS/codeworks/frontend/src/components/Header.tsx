@@ -23,7 +23,7 @@ export default function Header() {
                     </li>
                     <li>/</li>
                     <li className="font-lato font-bold text-lg">
-                        <Link href="/blog"><a>Blog</a></Link>
+                        <Link href="/blog"><a>Qiita</a></Link>
                     </li>
                     <li>
                         <img src="/img/Instagram.svg" alt="Instagram" className="w-6 h-6 ml-4" />

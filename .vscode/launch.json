@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "SpringProjectApplication",
+            "request": "launch",
+            "mainClass": "com.example.spring_project.SpringProjectApplication",
+            "projectName": ""
+        },
+        {
+            "type": "java",
             "name": "Main",
             "request": "launch",
             "mainClass": "Main"
