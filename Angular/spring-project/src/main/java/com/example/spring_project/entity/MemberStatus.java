@@ -19,7 +19,7 @@ public class MemberStatus {
     @Column(name = "user_id", nullable = false)
     private UUID userId;
 
-    @Column(name = "tatal_points", nullable = false)
+    @Column(name = "total_points", nullable = false)
     private int totalPoints;
 
     @Column(name = "rank", nullable = false)
