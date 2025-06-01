@@ -22,6 +22,6 @@ public interface OrderRepository extends JpaRepository<OrderHistory, String>{
     Page<OrderHistory> findByUserId(UUID userId, Pageable pageable);
 
     //過去3ヶ月分の合計取得ポイントに基づいて会員ランクを決定する
-    @Query("SELECT SUM(o.totalPrice) / 100 FROM orderHistory o where o.userId = :userId AND o.orderDate >= :since")
+    @Query("SELECT SUM(o.totalPrice) / 100 FROM OrderHistory o where o.userId = :userId AND o.orderDate >= :since")
     int sumPointsForUserSince(@Param("userId") UUID userId, @Param("since") LocalDateTime since);
 }
