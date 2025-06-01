@@ -33,7 +33,7 @@ public class OrderService {
     public OrderService(OrderRepository orderRepository, OrderDetailsRepository orderDetailsRepository) {
         this.orderRepository = orderRepository;
         this.orderDetailsRepository = orderDetailsRepository;
-    }
+    };
 
     @Transactional //メソッド内の処理に対してトランザクションが行われる
     public OrderResponse createOrder(OrderRequest orderRequest){
@@ -42,19 +42,19 @@ public class OrderService {
         
         OrderHistory orderHistory = new OrderHistory();
         orderHistory.setOrderNumber(orderNumber);
-        orderHistory.setOrder_date(orderDate);
-        orderHistory.setUser_id(orderRequest.getUserId());
-        orderHistory.setUser_name(orderRequest.getUserName());
-        orderHistory.setTotal_price(orderRequest.getTotalPrice());
-        orderHistory.setTotal_quantity(orderRequest.getTotalQuantity());
-        orderHistory.setEarned_points(calculatePoints(orderRequest.getTotalPrice()));
+        orderHistory.setOrderDate(orderDate);
+        orderHistory.setUserId(orderRequest.getUserId());
+        orderHistory.setUserName(orderRequest.getUserName());
+        orderHistory.setTotalPrice(orderRequest.getTotalPrice());
+        orderHistory.setTotalQuantity(orderRequest.getTotalQuantity());
+        orderHistory.setEarnedPoints(calculatePoints(orderRequest.getTotalPrice()));
         orderRepository.save(orderHistory);
 
         for(OrderItem item: orderRequest.getOrderItems()){
             OrderDetails orderDetails = new OrderDetails();
             orderDetails.setOrderNumber(orderNumber);
-            orderDetails.setProduct_id(item.getProfuctId());
-            orderDetails.setProduct_name(item.getProductName());
+            orderDetails.setProductId(item.getProfuctId());
+            orderDetails.setProductName(item.getProductName());
             orderDetails.setPrice(item.getPrice());
             orderDetailsRepository.save(orderDetails);
         }
@@ -87,7 +87,7 @@ public class OrderService {
         Page<OrderHistory> orderHistoryPage = orderRepository.findByUserId(userId, pageRequest);
 
         //クライエント表示用にデータ変換
-        List<OrderDTO> orderDTOs = orderHistoryPage.getContent().stream().map(this::convertToOrderDTO).collect(Collectors.toList())
+        List<OrderDTO> orderDTOs = orderHistoryPage.getContent().stream().map(this::convertToOrderDTO).collect(Collectors.toList());
         PageableDTO pageableDTO = new PageableDTO(
             orderHistoryPage.getNumber(),
             orderHistoryPage.getSize(),
@@ -101,18 +101,18 @@ public class OrderService {
         List<OrderDetails> orderDetails = orderDetailsRepository.findByOrderNumber(orderHistory.getOrderNumber());
         List<OrderItem> orderItems = orderDetails.stream().map(this::convertToOrderItem).collect(Collectors.toList());
         return new OrderDTO(
-            orderHistory.getOrderNumber().toString(),
+            orderHistory.getOrderDate().toString(),
             orderHistory.getOrderNumber(),
-            orderHistory.getTotal_price(),
-            orderHistory.getTotal_quantity(),
+            orderHistory.getTotalPrice(),
+            orderHistory.getTotalQuantity(),
             orderItems
         );
     }
     
     private OrderItem convertToOrderItem(OrderDetails orderDetails){
         return new OrderItem(
-            orderDetails.getProduct_id(),
-            orderDetails.getProduct_name(),
+            orderDetails.getProductId(),
+            orderDetails.getProductName(),
             orderDetails.getPrice()
         );
     }

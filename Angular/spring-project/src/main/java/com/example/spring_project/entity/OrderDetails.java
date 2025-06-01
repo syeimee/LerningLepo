@@ -23,21 +23,21 @@ public class OrderDetails {
     private String orderNumber;
 
     @Column(name = "product_id", nullable = false)
-    private int product_id;
+    private int productId;
 
     @Column(name = "product_name", nullable = false)
-    private String product_name;
+    private String productName;
 
     @Column(name = "price", nullable = false)
     private int price;
 
     @Column(name = "created_at", nullable = false, updatable = false) //updatable = falseで更新させない
     @CreationTimestamp //DBが保存される際に、現在日時を付与する
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at", nullable = false, updatable = true)//updatable = trueで更新させる
     @CreationTimestamp //DBが保存される際に、現在日時を付与する
-    private LocalDateTime updated_at;
+    private LocalDateTime updatedAt;
 
     //デフォルトコンストラクタ
     public OrderDetails(){
@@ -46,8 +46,8 @@ public class OrderDetails {
 
     public OrderDetails(String orderNumber, int product_id, String product_name, int price) {
         this.orderNumber = orderNumber;
-        this.product_id = product_id;
-        this.product_name = product_name;
+        this.productId = product_id;
+        this.productName = product_name;
         this.price = price;
     }
 
@@ -67,20 +67,20 @@ public class OrderDetails {
         this.orderNumber = orderNumber;
     }
 
-    public int getProduct_id() {
-        return product_id;
+    public int getProductId() {
+        return productId;
     }
 
-    public void setProduct_id(int product_id) {
-        this.product_id = product_id;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
-    public String getProduct_name() {
-        return product_name;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setProduct_name(String product_name) {
-        this.product_name = product_name;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public int getPrice() {
@@ -91,20 +91,20 @@ public class OrderDetails {
         this.price = price;
     }
 
-    public LocalDateTime getCreated_at() {
-        return created_at;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(LocalDateTime created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public LocalDateTime getUpdated_at() {
-        return updated_at;
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdated_at(LocalDateTime updated_at) {
-        this.updated_at = updated_at;
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     

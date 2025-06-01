@@ -19,43 +19,43 @@ public class OrderHistory {
     private String orderNumber;
 
     @Column(name = "order_date", nullable = false)
-    private LocalDateTime order_date;
+    private LocalDateTime orderDate;
 
     @Column(name = "user_id", nullable = false)
-    private UUID user_id;
+    private UUID userId;
 
     @Column(name = "user_name", nullable = false)
-    private String user_name;
+    private String userName;
 
     @Column(name = "total_price", nullable = false)
-    private int total_price;
+    private int totalPrice;
 
     @Column(name = "total_quantity", nullable = false)
-    private int total_quantity;
+    private int totalQuantity;
 
     @Column(name = "earned_points", nullable = false)
-    private int earned_points;
+    private int earnedPoints;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreationTimestamp
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at", nullable = false, updatable = true)
     @CreationTimestamp
-    private LocalDateTime updated_at;
+    private LocalDateTime updatedAt;
 
     //デフォルトコンストラクタ
     public OrderHistory() {
     }
 
-    public OrderHistory(String orderNumber, LocalDateTime order_date, UUID user_id, String user_name, int total_price,int total_quantity, int earned_points) {
+    public OrderHistory(String orderNumber, LocalDateTime orderDate, UUID userId, String userName, int totalPrice,int totalQuantity, int earnedPoints) {
         this.orderNumber = orderNumber;
-        this.order_date = order_date;
-        this.user_id = user_id;
-        this.user_name = user_name;
-        this.total_price = total_price;
-        this.total_quantity = total_quantity;
-        this.earned_points = earned_points;
+        this.orderDate = orderDate;
+        this.userId = userId;
+        this.userName = userName;
+        this.totalPrice = totalPrice;
+        this.totalQuantity = totalQuantity;
+        this.earnedPoints = earnedPoints;
     }
 
     public String getOrderNumber() {
@@ -66,68 +66,68 @@ public class OrderHistory {
         this.orderNumber = orderNumber;
     }
 
-    public LocalDateTime getOrder_date() {
-        return order_date;
+    public LocalDateTime getOrderDate() {
+        return orderDate;
     }
 
-    public void setOrder_date(LocalDateTime order_date) {
-        this.order_date = order_date;
+    public void setOrderDate(LocalDateTime orderDate) {
+        this.orderDate = orderDate;
     }
 
-    public UUID getUser_id() {
-        return user_id;
+    public UUID getUserId() {
+        return userId;
     }
 
-    public void setUser_id(UUID user_id) {
-        this.user_id = user_id;
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
-    public String getUser_name() {
-        return user_name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public int getTotal_price() {
-        return total_price;
+    public int getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setTotal_price(int total_price) {
-        this.total_price = total_price;
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
-    public int getTotal_quantity() {
-        return total_quantity;
+    public int getTotalQuantity() {
+        return totalQuantity;
     }
 
-    public void setTotal_quantity(int total_quantity) {
-        this.total_quantity = total_quantity;
+    public void setTotalQuantity(int totalQuantity) {
+        this.totalQuantity = totalQuantity;
     }
 
-    public int getEarned_points() {
-        return earned_points;
+    public int getEarnedPoints() {
+        return earnedPoints;
     }
 
-    public void setEarned_points(int earned_points) {
-        this.earned_points = earned_points;
+    public void setEarnedPoints(int earnedPoints) {
+        this.earnedPoints = earnedPoints;
     }
 
-    public LocalDateTime getCreated_at() {
-        return created_at;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(LocalDateTime created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public LocalDateTime getUpdated_at() {
-        return updated_at;
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdated_at(LocalDateTime updated_at) {
-        this.updated_at = updated_at;
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
 }
