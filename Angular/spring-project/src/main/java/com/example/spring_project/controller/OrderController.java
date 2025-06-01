@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.spring_project.dto.OrderHistoryResponse;
 import com.example.spring_project.dto.OrderRequest;
 import com.example.spring_project.dto.OrderResponse;
-import com.example.spring_project.entity.OrderHistory;
 import com.example.spring_project.service.OrderService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
