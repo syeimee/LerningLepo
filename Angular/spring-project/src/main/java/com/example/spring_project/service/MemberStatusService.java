@@ -1,7 +1,10 @@
 package com.example.spring_project.service;
 
+import java.lang.reflect.Member;
 import java.time.LocalDateTime;
 import java.util.UUID;
+
+import javax.management.RuntimeErrorException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,10 +54,16 @@ public class MemberStatusService {
     private String detarmineRank(int points){
         if(points >= 50){
             return "GOLD";
-        }else if(points >= 20){
+        }else if(points >= 10){
             return "SILVER";
         }else{
             return "BLONZE";
         }
+    }
+    //読み取り専用なのでtransactionは書かない
+    public MemberStatusResponse getMemberStatus(UUID userId){
+        MemberStatus memberStatus = memberStatusRepository.findByUserId(userId)
+                                    .orElseThrow(()-> new RuntimeException("Member Status Not Found:" + userId));
+        return new MemberStatusResponse(userId, memberStatus.getTotalPoints(), memberStatus.getRank());
     }
 }
