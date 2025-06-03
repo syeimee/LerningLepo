@@ -1,8 +1,9 @@
 import java.util.*;
+import java.time.*;
+import java.time.format.DateTimeParseException;
 
 public class Main {
-    static Map<String, Products> products = new LinkedHashMap<>();
-
+    static ProductManager productManager = new ProductManager();
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
@@ -17,10 +18,10 @@ public class Main {
 
             switch(input){
                 case "1" :
-                    addProduct(sc);
+                    productManager.addProduct(sc);
                     break;
                 case "2" :
-                    showProducts();
+                    productManager.showProducts();
                     break;
                 case "0" :
                     System.out.println("終了します。");
@@ -31,10 +32,39 @@ public class Main {
         } 
     }
 
+}
+
+class Products {
+    private String productCd;
+    private int price;
+    private LocalDate releaseDate;
+
+    public Products(String productCd, int price, LocalDate releaseDate) {
+        this.productCd = productCd;
+        this.price = price;
+        this.releaseDate = releaseDate;
+    }
+
+    public String getProductCd() {
+        return productCd;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public LocalDate getReleaseDate() {
+        return releaseDate;
+    }
+}
+
+class ProductManager{
+    static Map<String, Products> products = new LinkedHashMap<>();
+
     /**
      * ユーザーから価格と発売日を入力として受け取り、新しい商品を登録する。
      * 
-     * @params ユーザーから入力を受け取るためのScannerオブジェクト
+     * @params　ユーザーから入力を受け取るためのScannerオブジェクト
      */
     public static void addProduct(Scanner sc){
         System.out.println("整数値で価格を入力してください。");
@@ -47,7 +77,13 @@ public class Main {
         }
 
         System.out.println("発売日を入力してください(入力例:2025-06-03)");
-        String releaseDate = sc.nextLine();
+        LocalDate releaseDate;
+        try{
+            releaseDate = LocalDate.parse(sc.nextLine());
+        }catch(DateTimeParseException e){
+            System.out.println("発売日のフォーマットが不正です。正しい形式で入力してください (例: 2025-06-03)");
+            return;
+        }
 
         //UUIDで商品コード生成
         String productCd = UUID.randomUUID().toString();
@@ -66,28 +102,13 @@ public class Main {
             System.out.println("商品リストは空です");
             return;
         }
-
+    
         System.out.println("#######商品リスト#######");
-        int count = 1;
-        for(Products p: products.values()){
-            System.out.println(count + "個目の商品");
-            System.out.println("商品コード: " + p.productCd);
-            System.out.println("価格: " + p.price);
-            System.out.println("発売日: " + p.releaseDate);
-            System.out.println("########################");
-            count++;
-        }
+        products.values().forEach(p -> {
+            //%s:string, %d:decimal, %n:改行
+            System.out.printf("商品コード: %s | 価格: %d | 発売日: %s%n", p.getProductCd(), p.getPrice(), p.getReleaseDate());
+        });
+        System.out.println("########################");
     }
 
-}
-class Products {
-    String productCd;
-    int price;
-    String releaseDate;
-
-    public Products(String productCd, int price, String releaseDate) {
-        this.productCd = productCd;
-        this.price = price;
-        this.releaseDate = releaseDate;
-    }
 }
