@@ -25,10 +25,9 @@ FileUtils.mkdir_p("#{dir_name}/resources")
 # === memo.md テンプレート内容 ===
 template = <<~MARKDOWN
 # 学習テーマ
+作業日時: #{Time.now.strftime('%Y-%m-%d')}
 
 
-## 日時
-#{Time.now.strftime('%Y-%m-%d')}
 ## 目的・背景 
 
 
