@@ -50,12 +50,7 @@ application.yml
 ```
 
 ビルドしてもflywayが実行されない。
-よくよく調べてみると、Dockerfileの設定も必要とのこと。
-
-```dockerfile
-ENTRYPOINT ["-Dflyway.migrate=true"]
-```
-を追加して再ビルドしてみるがやはりだめ。
+※ Dockerfile に `ENTRYPOINT ["-Dflyway.migrate=true"]` を追加したが、Spring Bootの自動マイグレーション機能があるため不要だった。
 どうやら、マイグレーションファイルには命名規則がありそう。
 `V1_create_user.sql`では読み込まれない
 正しくは`V1__create_user.sql`（半角アンダーバー２つ）
@@ -88,14 +83,23 @@ ENTRYPOINT ["-Dflyway.migrate=true"]
 </dependency>
 ```
 flyway-mysqlはmysql専用に拡張されたものらしい。
+※ Flyway 7以降では、MySQL対応のために `flyway-mysql` モジュールが必須
 
 
 ## 課題・問題点  
 - DBのタイムスタンプとAPのタイムスタンプどちらを使用するか吟味する必要がある
 
+| 方針                                                  | 利点              | 懸念                |
+| --------------------------------------------------- | --------------- | ----------------- |
+| DBの `DEFAULT CURRENT_TIMESTAMP` を使用                 | 一貫性、パフォーマンス     | アプリ層で制御がしにくい      |
+| アプリ側の `@CreationTimestamp` / `@UpdateTimestamp` を使用 | 単体テストやMockがしやすい | 時刻のズレ（特に複数インスタンス） |
+
 
 
 ## 気づき・改善案  
+- FlywayのSQLファイル名には `V1__xxx.sql` のようにアンダースコア2つが必須（命名規則に厳密）
+- Spring Bootでは `application.yml` の設定だけでFlywayは自動実行される
+- `flyway-mysql` の追加がMySQL対応に必須（Flyway 7以降）
 
 
 
