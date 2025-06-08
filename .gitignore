@@ -17,3 +17,5 @@ Unity/**/*.aab
 Unity/**/*.exe
 Unity/**/*.app
 Unity/**/*.xcodeproj
+
+**/mysql-data/**
