@@ -3,7 +3,7 @@ backend/tmp/cache/
 
 # Next.js build output
 NextJS/udemy/.next/
-
+.next/
 # その他キャッシュやログ
 *.log
 node_modules/

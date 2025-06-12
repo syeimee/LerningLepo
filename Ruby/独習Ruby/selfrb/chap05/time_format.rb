@@ -1,0 +1,5 @@
+dt = Time.mktime(2021, 10, 5, 1, 23, 17)
+puts dt.strftime('%c')
+puts dt.strftime('%x')
+puts dt.strftime('%X')
+puts dt.strftime('%Y年 %m月 %d日（%a） %I時 %M分 %S秒')
