@@ -1,1 +1,9 @@
-node_modules
+# Rails bootsnap cache
+backend/tmp/cache/
+
+# Next.js build output
+NextJS/udemy/.next/
+
+# その他キャッシュやログ
+*.log
+node_modules/
