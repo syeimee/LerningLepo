@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>アイテムの一覧</title>
+</head>
+<body>
+    <!-- 全体アイテムを表示 -->
+    <ul>
+        <!-- iterStatは番号や個数を取得する -->
+        <li th:each = "item, iterStat : ${items}">
+
+            <!-- アイテムの表示 -->
+            <span th:text="${item}"></span>
+
+            <!-- 更新 items/update/id-->
+            <form th:action="@{'/items/update/' + ${iterStat.id}}" method="post">
+                <input type="text" name="newItem" placeholder="更新するアイテム">
+                <button type = "submit">更新</button>
+            </form>
+
+            <!-- 削除 items/delete/id-->
+            <form th:action="@{'/items/delete/' + ${iterStat.id}}" method="post">
+                <button type="submit">削除</button>
+            </form>
+                
+        </li>
+    </ul>
+
+    <!-- アイテムが空だったら th:ifはtrueの時だけHTMLを表示する -->
+    <p th:if="${#lists.isEmpty(items)}">アイテムがありません。</p>
+
+    <!-- アイテムの追加フォーム -->
+    <form action="@{/items/add}" method="post">
+        <input type="text" name="item" placeholder="追加するアイテム">
+        <button type="submit">追加</button>
+    </form>
+    
+</body>
+</html>

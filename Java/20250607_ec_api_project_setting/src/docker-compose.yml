@@ -1,0 +1,41 @@
+# ===========================================
+# docker-compose.yml（複数コンテナを一括管理）
+# ===========================================
+
+version: '3.8'  # 使用するComposeファイルのバージョン
+
+services:
+  # -------------------------
+  # MySQL データベースコンテナ
+  # -------------------------
+  db:
+    image: mysql:8.0  # 使用するMySQLのバージョン
+    container_name: ec_app-mysql  # コンテナ名
+    restart: always  # コンテナが停止しても常に再起動する
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass     # rootユーザーのパスワード
+      MYSQL_DATABASE: ec_db             # 作成する初期データベース名
+      MYSQL_USER: user                  # 通常ユーザー名
+      MYSQL_PASSWORD: userpass          # 通常ユーザーのパスワード
+    ports:
+      - "3306:3306"  # ホストの3306ポートをMySQLに割り当て（ポートが競合しないよう注意）
+    volumes:
+      - ./mysql-data:/var/lib/mysql  # データ永続化（ローカルにMySQLデータを保存）
+
+  # -------------------------
+  # Spring Boot アプリケーション
+  # -------------------------
+  api:
+    build:
+      context: ./ec-backend      # Dockerfile のあるディレクトリパス
+      dockerfile: Dockerfile    # 使用するDockerfile名
+    container_name: ec-backend   # コンテナ名
+    depends_on:
+      - db  # db コンテナが起動してからapiを起動する
+    ports:
+      - "8080:8080"  # Spring Bootのポートをホストに公開
+    environment:
+      # Spring Boot にMySQL接続情報を環境変数として渡す
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/ec_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: userpass

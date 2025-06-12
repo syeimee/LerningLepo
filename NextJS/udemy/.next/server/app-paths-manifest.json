@@ -1,0 +1,9 @@
+{
+  "/sc/page": "app/sc/page.js",
+  "/cc/page": "app/cc/page.js",
+  "/page": "app/page.js",
+  "/sa/page": "app/sa/page.js",
+  "/api/tasks/route": "app/api/tasks/route.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/(main)/task/page": "app/(main)/task/page.js"
+}
