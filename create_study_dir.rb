@@ -8,6 +8,12 @@ date_dir = Date.today.strftime('%Y%m%d')
 while true
   puts "作業ディレクトリ名を入力してください。"
   input = gets.chomp
+  
+  # プラットフォームによってエンコードを判定する
+  if Gem.win_platform?
+    input = input.encode('UTF-8', 'CP932') # Windows版Shift_JISの拡張
+  end
+
   dir_name = "#{date_dir}_#{input}"
   memo_path = "#{dir_name}/memo.md"
   
