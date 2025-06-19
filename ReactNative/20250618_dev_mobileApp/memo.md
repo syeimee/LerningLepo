@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
 });
 ```
 
-#### Expo Routerとは(ハンズオン)
+#### Expo Routerとは
 フォルダとファイル名で画面遷移が決まる仕組み
 
 ```bash
@@ -110,7 +110,54 @@ export default function RootLayout() {
 
 
 ## 気づき・改善案  
+### 🚀nativewind を入れてみる
+##### Tailwind CSS と NativeWindのインストール
+Tailwind CSS、NativeWind、そしてTypeScriptの型定義をインストール。
+
+```bash
+npm i tailwindcss
+npm i nativewind
+npm i --save-dev @types/react-native
+```
+
+#### Tailwind CSSの設定ファイルを作成し編集する
+Tailwind CSSの設定ファイルを生成。
+```bash
+npx tailwindcss init
+```
+プロジェクトのルートにtailwind.config.jsファイルが追加されるので、そこにTailwind CSSを適用する対象を記載する
+
+```js
+//tailwind.config.js
+
+/** @type {import('tailwindcss').Config} */
+module.exports = {
++ content: ["./App.{js,jsx,ts,tsx}", "./components/**/*.{tsx,jsx,ts,js}"],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+
+```
+
+babel.config.jsがexpo routerにはないので、作成する必要がある
+Babel は、最新の JavaScriptコードを、古いブラウザや環境でも動くように変換（トランスパイル）するツールらしい。
 
 
+```js
+//babel.config.js
+module.exports = function (api) {
+  api.cache(true);
+  return {
+    presets: ["babel-preset-expo"],
++   sourceMaps: true,
++   plugins: ["nativewind/babel"],
+  };
+};
+```
+※設定内容の補足説明
+- sourceMapsの設定：sourceMaps: trueでデバッグ時にソースコードを追跡できるようにします
 
+- pluginsの設定：["nativewind/babel"]でNativeWindを使用し、Tailwind CSS風のクラス名をReact Nativeに適用します
 
