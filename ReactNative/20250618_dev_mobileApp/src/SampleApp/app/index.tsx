@@ -1,13 +1,7 @@
 import React, { useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Modal,
-} from 'react-native';
+import {StyleSheet,Text,TouchableOpacity,View,Modal,} from 'react-native';
 
-export default function App() {
+const App = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [tapCount, setCount] = useState(0);
   const [startTime, setStartTime] = useState<number | null>(null);
@@ -120,7 +114,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   closeButton: {
-    backgroundColor: '#3B82F6',
+    backgroundColor: 'red',
     paddingHorizontal: 24,
     paddingVertical: 8,
     borderRadius: 12,
@@ -130,3 +124,5 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
+
+export default App;
