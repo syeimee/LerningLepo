@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "none",
+    "rootDir": "src",
+    "outDir": "dist",
+    "strict": true,
+    "noImplicitAny": false,
+    "lib": ["es2020"],
+    "downlevelIteration": true,   
+    "types": ["google-apps-script"]  // これで node の型定義は無視される
+  },
+  "include": ["src"]
+}
