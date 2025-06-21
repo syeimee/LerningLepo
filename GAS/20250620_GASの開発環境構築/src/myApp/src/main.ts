@@ -1,21 +1,29 @@
 const main = (): void =>{
-    const url = "https://www.jma.go.jp/bosai/forecast/#area_type=offices&area_code=330000";
+    //htmlを取得
+    const url = "https://qiita.com/advent-calendar/2016/crawler";
     const res = UrlFetchApp.fetch(url);
     const html = res.getContentText();
 
-    // 日付を取得
-    //example: <th class="forecast-date">今夜<br>20日(金)</th> →　今夜<br>20日(金)
-    const dateRegex: RegExp = /<th class="forecast-date.*?">(.*?)<\/th>/g;
-    const dates = [...html.matchAll(dateRegex)].map((m) =>
-        m[1].replace(/<br>/g, '').replace(/\s+/g, '')
-    );
-    // 天気（アイコンの直前のテキスト）を取得
-    const weatherRegex = /<td><div>(.*?)<\/div><img.*?class="forecast-icon">/g;
-    const weathers = [...html.matchAll(weatherRegex)].map((m) => m[1]);
+    /**
+     * リンクとタイトルを取得
+     * <div class="style-mpez5z">
+     *  <a href="http://amacbee.hatenablog.com/entry/2016/12/01/210436" class="style-14mbwqe">
+     *      scrapy-splashを使ってJavaScript利用ページを簡単スクレイピング
+     *  </a>
+     * </div>
+     */
+    const dateRegex: RegExp = /<div class="style-mpez5z.*?"><a href="(.*?)".*?>(.*?)<\/a><\/div>/g;//fetchしたhtmlには改行を含まない
+    const matches = [...html.matchAll(dateRegex)];
+    const urls = matches.map((m) => {
+        return m[1].replace(/<br>/g, '').replace(/\s+/g, '')
+    });
+    const titles = matches.map((m) => {
+        return m[2].replace(/<br>/g, '').replace(/\s+/g, '')
+    });
 
     // 表示
-    for (let i = 0; i < Math.min(dates.length, weathers.length); i++) {
-        console.log(`${dates[i]}: ${weathers[i]}`);
+    for (let i = 0; i < Math.min(urls.length, titles.length); i++) {
+        Logger.log(`${urls[i]}: ${titles[i]}`);
     }
 
 }

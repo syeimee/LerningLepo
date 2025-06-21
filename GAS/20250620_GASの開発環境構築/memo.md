@@ -136,7 +136,19 @@ npx tsc
 
 
 ## 気づき・改善案  
+### コンパイルとclasp pushのコマンド一本化
+```bash
+npm run push
+```
+で動作をするようにpackage.jsonを変更
 
-
-
+```json
+  "scripts": {
+    "build": "tsc",
+    "push": "npm run build && clasp push"
+  },
+```
+※補足
+- npx tsc は直接コマンドを叩く感じ
+- npm run build  は package.json のスクリプトを通して実行（"build": "tsc" と書いてあれば同じ動作）
 
