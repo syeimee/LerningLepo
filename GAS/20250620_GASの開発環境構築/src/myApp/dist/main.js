@@ -45,8 +45,43 @@ var main = function () {
     var titles = matches.map(function (m) {
         return m[2].replace(/<br>/g, '').replace(/\s+/g, '');
     });
-    // 表示
+    // ログ出力
     for (var i = 0; i < Math.min(urls.length, titles.length); i++) {
         Logger.log("".concat(urls[i], ": ").concat(titles[i]));
     }
+    //スプレッドシートの存在確認
+    var fileName = "スクレイピングの練習";
+    var files = DriveApp.getFilesByName(fileName);
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    if (files.hasNext()) {
+        var file = files.next();
+        ss = SpreadsheetApp.open(file);
+        Logger.log("\u300C".concat(ss.getName(), "\u300D\u3092\u958B\u304D\u307E\u3057\u305F"));
+    }
+    else {
+        ss = SpreadsheetApp.create(fileName);
+        Logger.log("\u300C".concat(ss.getName(), "\u300D\u3092\u65B0\u898F\u4F5C\u6210\u3057\u307E\u3057\u305F"));
+    }
+    //アクティブなシートの存在確認
+    var sheetName = "出力結果";
+    var sheet = ss.getSheetByName(sheetName);
+    Logger.log("\u30B9\u30AF\u30EC\u30A4\u30D4\u30F3\u30B0\u306E\u53D6\u5F97\u7D50\u679C\u3092\u30B7\u30FC\u30C8\u306B\u66F8\u304D\u8FBC\u307F\u307E\u3059\u3002");
+    if (!sheet) {
+        sheet = ss.insertSheet(sheetName);
+        Logger.log("".concat(sheetName, "\u304C\u5B58\u5728\u3057\u306A\u304B\u3063\u305F\u305F\u3081\u3001\u65B0\u898F\u3067\u4F5C\u6210\u3092\u884C\u3044\u307E\u3057\u305F\u3002"));
+    }
+    else {
+        Logger.log("\u3059\u3067\u306B\u51FA\u529B\u6E08\u307F\u306E\u30C7\u30FC\u30BF\u3092\u30AF\u30EA\u30A2\u3057\u307E\u3059");
+        sheet.clear();
+    }
+    //値の書き込み
+    // sheet.getRange(1, 1).setValue("URL");
+    // sheet.getRange(1, 2).setValue("タイトル");
+    // for (let i = 0; i < Math.min(urls.length, titles.length); i++) {
+    //     sheet.getRange(i + 2, 1).setValue(urls[i]);
+    //     sheet.getRange(i + 2, 2).setValue(titles[i]);
+    // }
+    var rows = urls.map(function (url, i) { return [url, titles[i]]; });
+    rows.unshift(["URL", "タイトル"]); // 見出しを先頭に追加
+    sheet.getRange(1, 1, rows.length, 2).setValues(rows);
 };
