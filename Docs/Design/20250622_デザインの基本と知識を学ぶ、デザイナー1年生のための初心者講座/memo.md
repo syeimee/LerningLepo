@@ -119,6 +119,22 @@
 <img src="./resources/30.png">
 <img src="./resources/31.png">
 
+### 写真
+どの写真をメインカットにするかによってイメージが変わる
+関係性を強めたい場合は近くに配置する
+<img src="./resources/32.png">
+<img src="./resources/33.png">
+<img src="./resources/34.png">
+`顔の向きと視線を意識してみる`
+<img src="./resources/35.png">
+
+```bash
+#画像のカラーモード
+RGB：モニターに表示される（WEB,映像の現場）
+CMYK：印刷用のデータ（シアン、マゼンタ、イエロー、ブラック）
+グレースケール：白、グレー、黒の「無彩色」
+モノクロ２階調：白と黒だけ
+```
 
 ## 課題・問題点  
 
