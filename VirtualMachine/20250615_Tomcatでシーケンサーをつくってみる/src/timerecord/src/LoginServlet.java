@@ -24,10 +24,10 @@ public class LoginServlet extends HttpServlet {
         //ログイン認証
         if ("admin".equals(username) && "xxxx".equals(password)) {
             //welcome.jspにdispachして、req,resを転送forwardする
-            req.getRequestDispatcher("/WEB-INF/jsp/welcome.jsp").forward(req, res);
+            req.getRequestDispatcher("/WEB-INF/jsp/index.jsp").forward(req, res);
         } else {
             //だめだったら、メッセージを表示
-            req.setAttribute("errorMessage", "ログイン失敗");
+            req.setAttribute("errorMessage", "ログイン情報が正しくありません。");
             req.getRequestDispatcher("/WEB-INF/jsp/login.jsp").forward(req, res);
         }
     }
