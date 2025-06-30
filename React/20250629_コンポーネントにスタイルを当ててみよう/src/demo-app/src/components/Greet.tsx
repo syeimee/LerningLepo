@@ -1,5 +1,5 @@
 import "./Greet.css"
-import List from "../components/List"
+import List from "./List"
 const Greet = ()=> {
   return (
     <div className="component">
