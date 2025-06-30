@@ -1,10 +1,11 @@
-import "./Greet.css"
-const Greet = ()=> {
+import "./page.css"
+import Title from "../components/Title";
+import TopicList from "../components/TopicList";
+export default function Home() {
   return (
-    <div className="component">
-      <h3>Hello World</h3>
+    <div className="container">
+      <Title />
+      <TopicList />
     </div>
   );
 }
-
-export default Greet;
