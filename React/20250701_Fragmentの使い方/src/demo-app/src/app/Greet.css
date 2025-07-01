@@ -1,0 +1,13 @@
+.component{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size:100px;
+    color: pink;
+}
+
+.item-list{
+    list-style: none;
+    padding-left: 100px;
+}
