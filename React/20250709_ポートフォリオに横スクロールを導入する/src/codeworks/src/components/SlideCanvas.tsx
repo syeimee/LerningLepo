@@ -7,6 +7,8 @@ import { initScene } from '@/lib/three/initScene';
 import { updateCurve } from '@/lib/three/updateCurve';
 import React, { useRef, useEffect } from 'react';
 import * as THREE from 'three';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
+
 
 const SLIDE_COUNT = 5;
 const SLIDE_WIDTH = 3.0;
@@ -17,9 +19,13 @@ const SLIDE_UNIT = SLIDE_WIDTH + GAP;
 
 type SlideCanvasProps = {
   onSlideClick?: (index: number) => void;
+  currentIdx: number
+  setCurrentIdx: (index: number) => void
 };
-export const SlideCanvas: React.FC<SlideCanvasProps>  = ({ onSlideClick }) =>  {
+export const SlideCanvas: React.FC<SlideCanvasProps> = ({ onSlideClick, currentIdx, setCurrentIdx }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const targetPositionRef = useRef(0);
+  const targetDistortionFactorRef = useRef(0);
 
   useEffect(() => {
     //親要素の幅・高さに合わせる
@@ -127,7 +133,7 @@ export const SlideCanvas: React.FC<SlideCanvasProps>  = ({ onSlideClick }) =>  {
     window.addEventListener("resize", handleResize);
 
     //モーダル関係　ここから
-// --- Raycasterでスライドクリック検出 ---
+    // --- Raycasterでスライドクリック検出 ---
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
 
@@ -151,7 +157,7 @@ export const SlideCanvas: React.FC<SlideCanvasProps>  = ({ onSlideClick }) =>  {
 
     //モーダル関係　ここまで
 
-    
+
     // --- アニメーション ---
     const animate = (time: number) => {
       // 1. 次のフレームで再びこの関数を呼び出す（ループ処理）
@@ -166,8 +172,16 @@ export const SlideCanvas: React.FC<SlideCanvasProps>  = ({ onSlideClick }) =>  {
       // 4. 前の位置を記録
       const prevPos = currentPosition;
 
+      currentPosition += (targetPositionRef.current - currentPosition) * SLIDE_CONFIG.smoothing;
+
       // 5. 現在位置を目標位置に向かって少しずつ補間（スムーズな動きに）
       currentPosition += (targetPosition - currentPosition) * SLIDE_CONFIG.smoothing;
+
+
+      let rawIndex = Math.round(currentPosition / SLIDE_CONFIG.unit);
+      let normalizedIndex = (rawIndex % SLIDE_CONFIG.slideCount + SLIDE_CONFIG.slideCount) % SLIDE_CONFIG.slideCount;
+
+      setCurrentIdx(normalizedIndex + 1);
 
       // 6. 現在の速度（＝フレーム間の移動距離 ÷ 時間）を計算
       const currentVelocity = Math.abs(currentPosition - prevPos) / deltaTime;
@@ -270,5 +284,49 @@ export const SlideCanvas: React.FC<SlideCanvasProps>  = ({ onSlideClick }) =>  {
     };
   }, []);
 
-  return <canvas ref={canvasRef} style={{ width: '100vw', height: '100vh', display: 'block' }} />;
+  const handlePrev = () => {
+    targetPositionRef.current -= SLIDE_CONFIG.unit * 2;
+    targetDistortionFactorRef.current = Math.min(1.0, targetDistortionFactorRef.current + 0.3);
+
+  };
+
+  const handleNext = () => {
+    targetPositionRef.current += SLIDE_CONFIG.unit * 2;
+    targetDistortionFactorRef.current = Math.min(1.0, targetDistortionFactorRef.current + 0.3);
+
+  };
+  return (
+    <div
+      style={{
+        width: '100vw',
+        height: '80vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'start',
+        position: 'relative',
+      }}
+    >
+      <canvas
+        ref={canvasRef}
+        style={{ width: '100%', height: '100%', display: 'block' }}
+      />
+
+      <p
+        className="absolute bottom-5 flex items-center justify-center text-xl tracking-wide text-black gap-2"
+      >
+        <button onClick={handlePrev}>
+          <ChevronLeftIcon className="w-5 h-5" />
+        </button>        <span className="tabular-nums">
+          {String(currentIdx).padStart(2, '0')} / {String(SLIDE_CONFIG.slideCount).padStart(2, '0')}
+        </span>
+        <button onClick={handleNext}>
+          <ChevronRightIcon className="w-5 h-5" />
+        </button>      
+      </p>
+    </div>
+  );
+
+
+
 };
