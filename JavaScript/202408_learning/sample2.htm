@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>テキストボックスとボタン</title>
+    <script>
+        function showAlert() {
+            var text1 = parseFloat(document.getElementById('textbox1').value);
+            var text2 = parseFloat(document.getElementById('textbox2').value);
+            var kigou = document.querySelector('input[name="operation"]:checked').value;
+            console.log(kigou);
+            var result =  calc(text1, text2, kigou);
+
+            if (checker(text1, text2)) {
+                document.getElementById('result').innerHTML = '計算結果: ' + result;
+            } else {
+                document.getElementById('result').innerHTML = '数値を入力してください';
+            }
+        }
+
+        function calc(text1, text2, operation) {
+            var result;
+            switch (operation) {
+                case 'tasu':
+                    result = text1 + text2;
+                    break;
+                case 'hiku':
+                    result = text1 - text2;
+                    break;
+                case 'waru':
+                    result = text1 / text2;
+                    break;
+                case 'kakeru':
+                    result = text1 * text2;
+                    break;
+                default:
+                    result = '不明な演算です';
+            }
+            return result;
+        }
+
+        function checker(arg1, arg2) {
+            return !(isNaN(arg1) || isNaN(arg2));
+        }
+    </script>
+</head>
+
+<body>
+    <h1>計算機</h1>
+    <input type="text" id="textbox1" placeholder="数値1を入力">
+    <input type="text" id="textbox2" placeholder="数値2を入力">
+
+    <input type="radio" id="tasu" name="operation" value="tasu" checked>
+    <label for="tasu">+</label>
+    <input type="radio" id="hiku" name="operation" value="hiku">
+    <label for="hiku">-</label>
+    <input type="radio" id="waru" name="operation" value="waru">
+    <label for="waru">÷</label>
+    <input type="radio" id="kakeru" name="operation" value="kakeru">
+    <label for="kakeru">×</label>
+
+    <button onclick="showAlert()">計算</button>
+    <div id="result"></div>
+</body>
+
+</html>

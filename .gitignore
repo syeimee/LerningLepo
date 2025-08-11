@@ -1,3 +1,14 @@
+<<<<<<< HEAD
+# Rails bootsnap cache
+backend/tmp/cache/
+
+# Next.js build output
+NextJS/udemy/.next/
+.next/
+# その他キャッシュやログ
+*.log
+node_modules/
+=======
 Java/java_samplegame/
 Java/udemy_java/udemy_java/
 Java/udemy_springboot/
@@ -19,3 +30,5 @@ Unity/**/*.app
 Unity/**/*.xcodeproj
 
 **/mysql-data/**
+>>>>>>> origin/main
+React/20250701_Fragmentの使い方/.DS_Store

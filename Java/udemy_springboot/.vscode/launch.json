@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-TodoApplication<todo-spring-boot-introduction>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.todo.TodoApplication",
+            "projectName": "todo-spring-boot-introduction",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-Spring2itemApplication<spring2item>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.udemy.spring2item.Spring2itemApplication",
+            "projectName": "spring2item",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

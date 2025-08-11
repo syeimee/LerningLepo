@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- React 18 -->
+        <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+        <!-- ReactDOM 18 -->
+        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+        <!-- Babel（JSXをブラウザで変換するため） -->
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    </head>
+    <body>
+        <div id="content"></div>
+        <script type="text/javascript">
+        
+            // 要素の取得
+            const contentElement = document.querySelector('#content');
+
+            //React18から追加されたJSXの描画方法
+            const root = ReactDOM.createRoot(contentElement);
+            root.render(<h1>Hello world!</h1>);
+        </script>
+    </body>
+</html>
