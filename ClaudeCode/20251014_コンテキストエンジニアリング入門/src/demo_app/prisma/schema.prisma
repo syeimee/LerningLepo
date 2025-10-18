@@ -1,0 +1,203 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ========================================
+// User
+// ========================================
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  image     String?
+  role      UserRole @default(TEACHER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  teacher Teacher?
+
+  @@map("users")
+}
+
+enum UserRole {
+  ADMIN
+  TEACHER
+}
+
+// ========================================
+// Student
+// ========================================
+model Student {
+  id                String        @id @default(uuid())
+  lastName          String
+  firstName         String
+  lastNameKana      String?
+  firstNameKana     String?
+  grade             String?
+  schoolName        String?
+  targetUniversity  String?
+  email             String?
+  phone             String?
+  parentName        String?
+  parentEmail       String?
+  parentPhone       String?
+  status            StudentStatus @default(ACTIVE)
+  notes             String?       @db.Text
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  lessons        Lesson[]
+  dailyReports   DailyReport[]
+  monthlyReports MonthlyReport[]
+
+  @@index([status])
+  @@index([lastName, firstName])
+  @@map("students")
+}
+
+enum StudentStatus {
+  ACTIVE
+  SUSPENDED
+  WITHDRAWN
+}
+
+// ========================================
+// Teacher
+// ========================================
+model Teacher {
+  id            String        @id @default(uuid())
+  userId        String        @unique
+  lastName      String
+  firstName     String
+  lastNameKana  String?
+  firstNameKana String?
+  email         String
+  phone         String?
+  subjects      String[]
+  status        TeacherStatus @default(ACTIVE)
+  notes         String?       @db.Text
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lessons        Lesson[]
+  dailyReports   DailyReport[]
+  monthlyReports MonthlyReport[]
+
+  @@index([status])
+  @@index([email])
+  @@map("teachers")
+}
+
+enum TeacherStatus {
+  ACTIVE
+  INACTIVE
+}
+
+// ========================================
+// Lesson
+// ========================================
+model Lesson {
+  id        String       @id @default(uuid())
+  studentId String
+  teacherId String
+  subject   String
+  date      DateTime     @db.Date
+  startTime String
+  endTime   String
+  location  String?
+  status    LessonStatus @default(SCHEDULED)
+  notes     String?      @db.Text
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  student     Student      @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  teacher     Teacher      @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  dailyReport DailyReport?
+
+  @@index([studentId])
+  @@index([teacherId])
+  @@index([date])
+  @@index([status])
+  @@index([date, startTime, teacherId])
+  @@index([date, startTime, studentId])
+  @@map("lessons")
+}
+
+enum LessonStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+}
+
+// ========================================
+// DailyReport
+// ========================================
+model DailyReport {
+  id            String   @id @default(uuid())
+  lessonId      String   @unique
+  teacherId     String
+  studentId     String
+  subject       String
+  lessonDate    DateTime @db.Date
+  theme         String
+  content       String   @db.Text
+  materials     String?
+  understanding Int      @default(3)
+  homework      String?  @db.Text
+  nextPlan      String?  @db.Text
+  remarks       String?  @db.Text
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  lesson  Lesson  @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  teacher Teacher @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@index([teacherId])
+  @@index([studentId])
+  @@index([lessonDate])
+  @@map("daily_reports")
+}
+
+// ========================================
+// MonthlyReport
+// ========================================
+model MonthlyReport {
+  id                     String     @id @default(uuid())
+  studentId              String
+  teacherId              String
+  subject                String
+  year                   Int
+  month                  Int
+  totalLessons           Int        @default(0)
+  absences               Int        @default(0)
+  lateCount              Int        @default(0)
+  learningMotivation     Int        @default(2)
+  homeworkEngagement     Int        @default(2)
+  reviewEngagement       Int        @default(2)
+  lessonContent          String     @db.Text
+  comprehension          String     @db.Text
+  weeklyTestDates        DateTime[] @db.Date
+  weeklyTestTopics       String[]
+  weeklyTestScores       Int[]
+  weeklyTestPassingScores Int[]
+  overallComment         String     @db.Text
+  googleSheetUrl         String?
+  createdAt              DateTime   @default(now())
+  updatedAt              DateTime   @updatedAt
+
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  teacher Teacher @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+
+  @@index([studentId])
+  @@index([teacherId])
+  @@index([studentId, teacherId, subject, year, month])
+  @@index([year, month])
+  @@map("monthly_reports")
+}
