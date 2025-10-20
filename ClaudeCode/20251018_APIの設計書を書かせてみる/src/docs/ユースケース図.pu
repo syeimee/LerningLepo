@@ -1,0 +1,41 @@
+@startuml ユースケース図
+
+left to right direction
+skinparam actorStyle awesome
+
+actor "購入者" as User
+
+rectangle "CoconiAru" {
+  (商品を検索する) as Search
+  (商品をカートに追加する) as AddToCart
+  (注文する) as Order
+  (会員登録する) as Register
+  (ログインする) as Login
+  (注文履歴を見る) as History
+  (レビューを書く) as Review
+  (決済する) as Pay
+  (商品を登録・編集する) as ManageProduct
+  (注文を管理する) as ManageOrder
+  (生産者を管理する) as ManageProducer
+}
+
+actor "管理者" as Admin
+actor "生産者" as Producer
+
+User --> Search
+User --> AddToCart
+User --> Order
+User --> Pay
+User --> Register
+User --> Login
+User --> History
+User --> Review
+
+Login <-- Producer
+ManageProduct <-- Producer
+ManageOrder <-- Producer
+
+ManageOrder <-- Admin
+ManageProducer <-- Admin
+
+@enduml

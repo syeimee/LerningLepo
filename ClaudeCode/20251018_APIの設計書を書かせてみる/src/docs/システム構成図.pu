@@ -1,0 +1,61 @@
+@startuml システム構成図
+title REST API Webサービス構成図
+
+skinparam packageStyle rectangle
+skinparam linetype polyline
+skinparam arrowThickness 2
+skinparam arrowColor black
+
+[SSL認証(Conoha)] as ssl
+[ドメインサービス(Conoha)] as domain
+
+
+package "クライアント" {
+  [ブラウザ] as browser
+}
+
+package "コンテンツサーバ(Conoha Wing)" {
+  [静的コンテンツ] as static_content
+}
+
+package "APIサーバ(Conoha VPS)" {
+  package "アプリサーバ" {
+    [API] as rest_api
+  }
+  
+  database "DBサーバ" {
+    [MySQL] as db
+  }
+}
+
+package "バックアップサーバ(その他VPS)" {
+  package "バックアップコンテンツ" {
+    [静的コンテンツ] as bu_static_content
+  }
+  database "バックアップDB" {
+    [MySQL] as bu_db
+  }
+}
+
+package "外部サービス" {
+  package "クレジット決済サービス" {
+    [Stripe] as Stripe
+  }
+
+  package "配達サービス" {
+    [クロネコ] as BlackCat
+  }
+}
+
+browser -right-> rest_api : APIリクエスト(SSL経由)
+browser -down-> static_content : コンテンツ取得
+rest_api -down-> db : データ取得・更新
+rest_api -right-> ssl : 認証
+rest_api -right-> domain : APIリクエスト時のドメイン確認
+rest_api -right-> Stripe : クレジット決済
+rest_api -right-> BlackCat : 配達料検索
+static_content -down-> bu_static_content : 差分バックアップ
+static_content -right-> domain : ドメイン情報取得
+db -down-> bu_db : 差分バックアップ
+
+@enduml
