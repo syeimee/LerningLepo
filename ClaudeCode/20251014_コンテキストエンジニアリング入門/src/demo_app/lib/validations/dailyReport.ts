@@ -1,13 +1,28 @@
 import { z } from 'zod'
 
-export const dailyReportSchema = z.object({
-  lessonId: z.string().min(1, '授業を選択してください'),
-  studentId: z.string().min(1, '生徒を選択してください'),
-  teacherId: z.string().min(1, '講師を選択してください'),
-  understanding: z.number().min(1, '理解度を選択してください').max(5),
-  progress: z.string().min(1, '進捗を入力してください'),
+export const createDailyReportSchema = z.object({
+  lessonId: z.string().uuid('有効な授業IDを指定してください'),
+  teacherId: z.string().uuid('有効な講師IDを指定してください'),
+  studentId: z.string().uuid('有効な生徒IDを指定してください'),
+  subject: z.string().min(1, '科目を入力してください'),
+  lessonDate: z.string().or(z.date()),
+  theme: z.string().min(1, 'テーマを入力してください'),
+  content: z.string().min(1, '授業内容を入力してください'),
+  materials: z.string().optional(),
+  understanding: z.number().min(1, '理解度は1以上です').max(5, '理解度は5以下です').default(3),
   homework: z.string().optional(),
-  nextGoal: z.string().min(1, '次回目標を入力してください'),
+  nextPlan: z.string().optional(),
+  remarks: z.string().optional(),
 })
 
-export type DailyReportFormData = z.infer<typeof dailyReportSchema>
+export type CreateDailyReportInput = z.infer<typeof createDailyReportSchema>
+
+export const updateDailyReportSchema = createDailyReportSchema.partial().extend({
+  id: z.string().uuid(),
+})
+
+export type UpdateDailyReportInput = z.infer<typeof updateDailyReportSchema>
+
+// 従来の互換性のため
+export const dailyReportSchema = createDailyReportSchema
+export type DailyReportFormData = CreateDailyReportInput
