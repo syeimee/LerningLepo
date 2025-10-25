@@ -1,0 +1,41 @@
+[
+  {
+    "id": "user-admin-1",
+    "email": "admin@example.com",
+    "role": "ADMIN",
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "user-teacher-1",
+    "email": "teacher1@example.com",
+    "role": "TEACHER",
+    "teacherId": "teacher-1",
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "user-teacher-2",
+    "email": "teacher2@example.com",
+    "role": "TEACHER",
+    "teacherId": "teacher-2",
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "user-student-1",
+    "email": "student1@example.com",
+    "role": "STUDENT",
+    "studentId": "student-1",
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "user-student-2",
+    "email": "student2@example.com",
+    "role": "STUDENT",
+    "studentId": "student-2",
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  }
+]

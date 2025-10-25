@@ -1,0 +1,302 @@
+[
+  {
+    "id": "teacher-1",
+    "name": "山田 先生",
+    "email": "yamada.prof@example.com",
+    "phone": "080-1111-2222",
+    "subjects": ["数学"],
+    "bio": "東京大学大学院数学専攻修了。20年以上の指導経験。",
+    "createdAt": "2023-01-01T00:00:00Z",
+    "updatedAt": "2023-01-01T00:00:00Z"
+  },
+  {
+    "id": "teacher-2",
+    "name": "佐藤 先生",
+    "email": "sato.sensei@example.com",
+    "phone": "080-2222-3333",
+    "subjects": ["物理"],
+    "bio": "京都大学理学部物理学科卒業。医学部入試物理のエキスパート。",
+    "createdAt": "2023-01-01T00:00:00Z",
+    "updatedAt": "2023-01-01T00:00:00Z"
+  },
+  {
+    "id": "teacher-3",
+    "name": "鈴木 講師",
+    "email": "suzuki.lecturer@example.com",
+    "phone": "080-3333-4444",
+    "subjects": ["化学"],
+    "bio": "大阪大学大学院化学専攻博士課程修了。理論化学が得意。",
+    "createdAt": "2023-01-01T00:00:00Z",
+    "updatedAt": "2023-01-01T00:00:00Z"
+  },
+  {
+    "id": "teacher-4",
+    "name": "高橋 先生",
+    "email": "takahashi.sensei@example.com",
+    "phone": "080-4444-5555",
+    "subjects": ["生物"],
+    "bio": "東京医科歯科大学医学部卒業。現役医師として活動中。",
+    "createdAt": "2023-01-01T00:00:00Z",
+    "updatedAt": "2023-01-01T00:00:00Z"
+  },
+  {
+    "id": "teacher-5",
+    "name": "伊藤 講師",
+    "email": "ito.lecturer@example.com",
+    "phone": "080-5555-6666",
+    "subjects": ["英語"],
+    "bio": "ハーバード大学留学経験あり。TOEFL満点取得者。",
+    "createdAt": "2023-01-01T00:00:00Z",
+    "updatedAt": "2023-01-01T00:00:00Z"
+  },
+  {
+    "id": "teacher-6",
+    "name": "渡辺 教授",
+    "email": "watanabe.prof@example.com",
+    "phone": "080-6666-7777",
+    "subjects": ["数学", "物理"],
+    "bio": "東北大学大学院理学研究科修了。数理物理学専門。",
+    "createdAt": "2023-02-01T00:00:00Z",
+    "updatedAt": "2023-02-01T00:00:00Z"
+  },
+  {
+    "id": "teacher-7",
+    "name": "山本 先生",
+    "email": "yamamoto.sensei@example.com",
+    "phone": "080-7777-8888",
+    "subjects": ["化学", "生物"],
+    "bio": "名古屋大学医学部卒業。生化学が専門分野。",
+    "createdAt": "2023-02-01T00:00:00Z",
+    "updatedAt": "2023-02-01T00:00:00Z"
+  },
+  {
+    "id": "teacher-8",
+    "name": "中村 講師",
+    "email": "nakamura.lecturer@example.com",
+    "phone": "080-8888-9999",
+    "subjects": ["英語"],
+    "bio": "オックスフォード大学大学院修了。英作文指導に定評あり。",
+    "createdAt": "2023-02-01T00:00:00Z",
+    "updatedAt": "2023-02-01T00:00:00Z"
+  },
+  {
+    "id": "teacher-9",
+    "name": "小林 先生",
+    "email": "kobayashi.sensei@example.com",
+    "phone": "080-9999-0000",
+    "subjects": ["数学"],
+    "bio": "九州大学大学院数理学府修了。確率・統計が得意。",
+    "createdAt": "2023-03-01T00:00:00Z",
+    "updatedAt": "2023-03-01T00:00:00Z"
+  },
+  {
+    "id": "teacher-10",
+    "name": "加藤 教授",
+    "email": "kato.prof@example.com",
+    "phone": "080-0000-1111",
+    "subjects": ["物理"],
+    "bio": "北海道大学理学部卒業。力学・電磁気学が専門。",
+    "createdAt": "2023-03-01T00:00:00Z",
+    "updatedAt": "2023-03-01T00:00:00Z"
+  },
+  {
+    "id": "teacher-11",
+    "name": "吉田 講師",
+    "email": "yoshida.lecturer@example.com",
+    "phone": "080-1234-5678",
+    "subjects": ["化学"],
+    "bio": "慶應義塾大学理工学部応用化学科卒業。有機化学専門。",
+    "createdAt": "2023-03-01T00:00:00Z",
+    "updatedAt": "2023-03-01T00:00:00Z"
+  },
+  {
+    "id": "teacher-12",
+    "name": "山田 先生",
+    "email": "yamada2.sensei@example.com",
+    "phone": "080-2345-6789",
+    "subjects": ["生物"],
+    "bio": "千葉大学大学院医学研究院修了。分子生物学が専門。",
+    "createdAt": "2023-04-01T00:00:00Z",
+    "updatedAt": "2023-04-01T00:00:00Z"
+  },
+  {
+    "id": "teacher-13",
+    "name": "佐々木 講師",
+    "email": "sasaki.lecturer@example.com",
+    "phone": "080-3456-7890",
+    "subjects": ["英語"],
+    "bio": "早稲田大学国際教養学部卒業。英語ディベート指導経験豊富。",
+    "createdAt": "2023-04-01T00:00:00Z",
+    "updatedAt": "2023-04-01T00:00:00Z"
+  },
+  {
+    "id": "teacher-14",
+    "name": "松本 教授",
+    "email": "matsumoto.prof@example.com",
+    "phone": "080-4567-8901",
+    "subjects": ["数学", "物理"],
+    "bio": "広島大学大学院理学研究科修了。応用数学が専門。",
+    "createdAt": "2023-04-01T00:00:00Z",
+    "updatedAt": "2023-04-01T00:00:00Z"
+  },
+  {
+    "id": "teacher-15",
+    "name": "井上 先生",
+    "email": "inoue.sensei@example.com",
+    "phone": "080-5678-9012",
+    "subjects": ["化学"],
+    "bio": "岡山大学大学院自然科学研究科修了。無機化学専門。",
+    "createdAt": "2023-05-01T00:00:00Z",
+    "updatedAt": "2023-05-01T00:00:00Z"
+  },
+  {
+    "id": "teacher-16",
+    "name": "木村 講師",
+    "email": "kimura.lecturer@example.com",
+    "phone": "080-6789-0123",
+    "subjects": ["生物"],
+    "bio": "熊本大学医学部卒業。解剖学・生理学が得意。",
+    "createdAt": "2023-05-01T00:00:00Z",
+    "updatedAt": "2023-05-01T00:00:00Z"
+  },
+  {
+    "id": "teacher-17",
+    "name": "林 先生",
+    "email": "hayashi.sensei@example.com",
+    "phone": "080-7890-1234",
+    "subjects": ["英語"],
+    "bio": "ケンブリッジ大学大学院修了。英文法指導のプロフェッショナル。",
+    "createdAt": "2023-05-01T00:00:00Z",
+    "updatedAt": "2023-05-01T00:00:00Z"
+  },
+  {
+    "id": "teacher-18",
+    "name": "斎藤 教授",
+    "email": "saito.prof@example.com",
+    "phone": "080-8901-2345",
+    "subjects": ["数学"],
+    "bio": "新潟大学理学部数学科卒業。幾何学・代数学専門。",
+    "createdAt": "2023-06-01T00:00:00Z",
+    "updatedAt": "2023-06-01T00:00:00Z"
+  },
+  {
+    "id": "teacher-19",
+    "name": "清水 講師",
+    "email": "shimizu.lecturer@example.com",
+    "phone": "080-9012-3456",
+    "subjects": ["物理"],
+    "bio": "金沢大学理工学域卒業。量子力学・相対性理論が専門。",
+    "createdAt": "2023-06-01T00:00:00Z",
+    "updatedAt": "2023-06-01T00:00:00Z"
+  },
+  {
+    "id": "teacher-20",
+    "name": "森 先生",
+    "email": "mori.sensei@example.com",
+    "phone": "080-0123-4567",
+    "subjects": ["化学", "生物"],
+    "bio": "信州大学大学院総合理工学研究科修了。生物化学専門。",
+    "createdAt": "2023-06-01T00:00:00Z",
+    "updatedAt": "2023-06-01T00:00:00Z"
+  },
+  {
+    "id": "teacher-21",
+    "name": "池田 講師",
+    "email": "ikeda.lecturer@example.com",
+    "phone": "080-1111-3333",
+    "subjects": ["英語"],
+    "bio": "国際基督教大学卒業。英語リスニング指導に定評。",
+    "createdAt": "2023-07-01T00:00:00Z",
+    "updatedAt": "2023-07-01T00:00:00Z"
+  },
+  {
+    "id": "teacher-22",
+    "name": "橋本 教授",
+    "email": "hashimoto.prof@example.com",
+    "phone": "080-2222-4444",
+    "subjects": ["数学"],
+    "bio": "浜松医科大学非常勤講師。医学部入試数学に精通。",
+    "createdAt": "2023-07-01T00:00:00Z",
+    "updatedAt": "2023-07-01T00:00:00Z"
+  },
+  {
+    "id": "teacher-23",
+    "name": "前田 先生",
+    "email": "maeda.sensei@example.com",
+    "phone": "080-3333-5555",
+    "subjects": ["物理"],
+    "bio": "山口大学理学部物理学科卒業。熱力学・統計力学が専門。",
+    "createdAt": "2023-07-01T00:00:00Z",
+    "updatedAt": "2023-07-01T00:00:00Z"
+  },
+  {
+    "id": "teacher-24",
+    "name": "藤田 講師",
+    "email": "fujita.lecturer@example.com",
+    "phone": "080-4444-6666",
+    "subjects": ["化学"],
+    "bio": "愛媛大学大学院理工学研究科修了。物理化学専門。",
+    "createdAt": "2023-08-01T00:00:00Z",
+    "updatedAt": "2023-08-01T00:00:00Z"
+  },
+  {
+    "id": "teacher-25",
+    "name": "岡田 先生",
+    "email": "okada.sensei@example.com",
+    "phone": "080-5555-7777",
+    "subjects": ["生物"],
+    "bio": "鹿児島大学医学部卒業。細胞生物学・免疫学が得意。",
+    "createdAt": "2023-08-01T00:00:00Z",
+    "updatedAt": "2023-08-01T00:00:00Z"
+  },
+  {
+    "id": "teacher-26",
+    "name": "長谷川 教授",
+    "email": "hasegawa.prof@example.com",
+    "phone": "080-6666-8888",
+    "subjects": ["英語", "数学"],
+    "bio": "上智大学外国語学部卒業。多言語教育のスペシャリスト。",
+    "createdAt": "2023-08-01T00:00:00Z",
+    "updatedAt": "2023-08-01T00:00:00Z"
+  },
+  {
+    "id": "teacher-27",
+    "name": "村上 講師",
+    "email": "murakami.lecturer@example.com",
+    "phone": "080-7777-9999",
+    "subjects": ["数学"],
+    "bio": "筑波大学数理物質科学研究科修了。解析学専門。",
+    "createdAt": "2023-09-01T00:00:00Z",
+    "updatedAt": "2023-09-01T00:00:00Z"
+  },
+  {
+    "id": "teacher-28",
+    "name": "石井 先生",
+    "email": "ishii.sensei@example.com",
+    "phone": "080-8888-0000",
+    "subjects": ["物理", "化学"],
+    "bio": "横浜国立大学大学院工学研究院修了。応用物理学専門。",
+    "createdAt": "2023-09-01T00:00:00Z",
+    "updatedAt": "2023-09-01T00:00:00Z"
+  },
+  {
+    "id": "teacher-29",
+    "name": "近藤 教授",
+    "email": "kondo.prof@example.com",
+    "phone": "080-9999-1111",
+    "subjects": ["生物"],
+    "bio": "神戸大学医学部卒業。現役医師。遺伝学・進化生物学専門。",
+    "createdAt": "2023-09-01T00:00:00Z",
+    "updatedAt": "2023-09-01T00:00:00Z"
+  },
+  {
+    "id": "teacher-30",
+    "name": "坂本 講師",
+    "email": "sakamoto.lecturer@example.com",
+    "phone": "080-0000-2222",
+    "subjects": ["英語"],
+    "bio": "一橋大学商学部卒業。IELTS試験対策指導のエキスパート。",
+    "createdAt": "2023-09-01T00:00:00Z",
+    "updatedAt": "2023-09-01T00:00:00Z"
+  }
+]

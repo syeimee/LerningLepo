@@ -95,8 +95,8 @@ mkdir -p prisma/migrations
 1. [Supabase](https://supabase.com/)にアクセス
 2. 「New Project」をクリック
 3. プロジェクト情報を入力
-   - Name: `medical-school-management`
-   - Database Password: 強力なパスワードを設定
+   - Name: `school-management`
+   - Database Password: 強力なパスワードを設定　_Y.tAHBGk6i&z*D
    - Region: 最寄りのリージョン（日本の場合は`Northeast Asia (Tokyo)`）
 
 ### 3.2 接続情報の取得
@@ -105,7 +105,7 @@ mkdir -p prisma/migrations
 2. 「Connection string」セクションから `DATABASE_URL` をコピー
 
 ```
-postgresql://postgres:[YOUR-PASSWORD]@db.[PROJECT-REF].supabase.co:5432/postgres
+postgresql://postgres:[YOUR_PASSWORD]@db.dnotlkxjgxdxpescmzwf.supabase.co:5432/postgres
 ```
 
 ---
@@ -124,7 +124,7 @@ npx prisma init
 
 ```env
 # Database
-DATABASE_URL="postgresql://postgres:[YOUR-PASSWORD]@db.[PROJECT-REF].supabase.co:5432/postgres"
+DATABASE_URL="postgresql://postgres:[YOUR_PASSWORD]@db.dnotlkxjgxdxpescmzwf.supabase.co:5432/postgres"
 
 # NextAuth
 NEXTAUTH_URL="http://localhost:3000"

@@ -1,12 +1,27 @@
 'use client'
 
 import { Box, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Chip } from '@mui/material'
-import { users, type User, type UserRole } from '@/lib/data'
+
+export type UserRole = 'ADMIN' | 'TEACHER' | 'STUDENT'
+
+export interface DemoUser {
+  id: string
+  name: string
+  email: string
+  role: UserRole
+}
 
 interface UserRoleSelectorProps {
-  currentUser: User
-  onUserChange: (user: User) => void
+  currentUser: DemoUser
+  onUserChange: (user: DemoUser) => void
 }
+
+// デモ用のユーザーリスト
+const demoUsers: DemoUser[] = [
+  { id: 'admin-1', name: '管理者', email: 'admin@school.example.com', role: 'ADMIN' },
+  { id: 'teacher-1', name: '山田太郎（講師）', email: 'yamada.taro@school.example.com', role: 'TEACHER' },
+  { id: 'student-1', name: '田中太郎（生徒）', email: 'tanaka.taro@example.com', role: 'STUDENT' },
+]
 
 const getRoleLabel = (role: UserRole): string => {
   switch (role) {
@@ -32,14 +47,14 @@ const getRoleColor = (role: UserRole): 'primary' | 'success' | 'warning' => {
 
 export default function UserRoleSelector({ currentUser, onUserChange }: UserRoleSelectorProps) {
   const handleChange = (event: SelectChangeEvent) => {
-    const selectedUser = users.find((u) => u.id === event.target.value)
+    const selectedUser = demoUsers.find((u) => u.id === event.target.value)
     if (selectedUser) {
       onUserChange(selectedUser)
     }
   }
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3, p: 2, bgcolor: 'info.light', borderRadius: 1 }}>
       <FormControl sx={{ minWidth: 300 }} size="small">
         <InputLabel id="user-role-selector-label">デモユーザー切り替え</InputLabel>
         <Select
@@ -49,11 +64,11 @@ export default function UserRoleSelector({ currentUser, onUserChange }: UserRole
           label="デモユーザー切り替え"
           onChange={handleChange}
         >
-          {users.map((user) => (
+          {demoUsers.map((user) => (
             <MenuItem key={user.id} value={user.id}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <Chip label={getRoleLabel(user.role)} size="small" color={getRoleColor(user.role)} />
-                <span>{user.email}</span>
+                <span>{user.name}</span>
               </Box>
             </MenuItem>
           ))}

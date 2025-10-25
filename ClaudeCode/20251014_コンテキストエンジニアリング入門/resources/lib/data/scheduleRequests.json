@@ -1,0 +1,41 @@
+[
+  {
+    "id": "request-1",
+    "requesterId": "user-teacher-1",
+    "requesterRole": "TEACHER",
+    "teacherId": "teacher-1",
+    "subject": "数学",
+    "preferredDates": ["2025-10-20", "2025-10-21", "2025-10-22"],
+    "preferredTimeSlots": [1, 2, 3],
+    "notes": "午前中を希望します",
+    "status": "PENDING",
+    "createdAt": "2025-10-15T00:00:00.000Z",
+    "updatedAt": "2025-10-15T00:00:00.000Z"
+  },
+  {
+    "id": "request-2",
+    "requesterId": "user-student-1",
+    "requesterRole": "STUDENT",
+    "studentId": "student-1",
+    "subject": "数学",
+    "preferredDates": ["2025-10-20", "2025-10-21"],
+    "preferredTimeSlots": [2, 3, 4],
+    "notes": "できれば午前から昼過ぎを希望",
+    "status": "PENDING",
+    "createdAt": "2025-10-15T00:00:00.000Z",
+    "updatedAt": "2025-10-15T00:00:00.000Z"
+  },
+  {
+    "id": "request-3",
+    "requesterId": "user-student-2",
+    "requesterRole": "STUDENT",
+    "studentId": "student-2",
+    "subject": "物理",
+    "preferredDates": ["2025-10-21", "2025-10-22", "2025-10-23"],
+    "preferredTimeSlots": [5, 6, 7],
+    "notes": "夕方が希望です",
+    "status": "PENDING",
+    "createdAt": "2025-10-15T00:00:00.000Z",
+    "updatedAt": "2025-10-15T00:00:00.000Z"
+  }
+]
