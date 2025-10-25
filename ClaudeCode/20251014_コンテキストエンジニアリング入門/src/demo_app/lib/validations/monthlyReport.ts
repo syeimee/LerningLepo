@@ -1,29 +1,33 @@
 import { z } from 'zod'
 
-export const monthlyReportSchema = z
+export const createMonthlyReportSchema = z
   .object({
     studentId: z.string().uuid('有効な生徒IDを指定してください'),
+    teacherId: z.string().uuid('有効な講師IDを指定してください'),
     subject: z.string().min(1, '科目は必須です'),
     year: z.number().int().min(2020, '有効な年を入力してください'),
     month: z.number().int().min(1).max(12, '月は1〜12の範囲で入力してください'),
-    totalLessons: z.number().int().min(0, '授業回数は0以上である必要があります'),
-    absences: z.number().int().min(0, '欠席数は0以上である必要があります'),
-    lateCount: z.number().int().min(0, '遅刻数は0以上である必要があります'),
+    totalLessons: z.number().int().min(0, '授業回数は0以上である必要があります').default(0),
+    absences: z.number().int().min(0, '欠席数は0以上である必要があります').default(0),
+    lateCount: z.number().int().min(0, '遅刻数は0以上である必要があります').default(0),
     learningMotivation: z
       .number()
       .int()
       .min(1)
-      .max(3, '学習意欲は1〜3の範囲で入力してください'),
+      .max(3, '学習意欲は1〜3の範囲で入力してください')
+      .default(2),
     homeworkEngagement: z
       .number()
       .int()
       .min(1)
-      .max(3, '課題・宿題の取り組みは1〜3の範囲で入力してください'),
+      .max(3, '課題・宿題の取り組みは1〜3の範囲で入力してください')
+      .default(2),
     reviewEngagement: z
       .number()
       .int()
       .min(1)
-      .max(3, '復習の取り組みは1〜3の範囲で入力してください'),
+      .max(3, '復習の取り組みは1〜3の範囲で入力してください')
+      .default(2),
     lessonContent: z
       .string()
       .min(1, '授業内容は必須です')
@@ -33,7 +37,7 @@ export const monthlyReportSchema = z
       .min(1, '理解度は必須です')
       .max(500, '理解度は500文字以内で入力してください'),
     weeklyTestDates: z
-      .array(z.date())
+      .array(z.string().or(z.date()))
       .max(4, '週テスト日付は最大4回分まで登録できます')
       .optional()
       .default([]),
@@ -56,6 +60,7 @@ export const monthlyReportSchema = z
       .string()
       .min(1, '総評は必須です')
       .max(500, '総評は500文字以内で入力してください'),
+    googleSheetUrl: z.string().url().optional(),
   })
   .refine(
     (data) => {
@@ -72,10 +77,15 @@ export const monthlyReportSchema = z
     }
   )
 
-export type MonthlyReportFormData = z.infer<typeof monthlyReportSchema>
-
-// Server Actionsで使用する作成用スキーマ（teacherIdは自動設定されるため不要）
-export const createMonthlyReportSchema = monthlyReportSchema
+export type CreateMonthlyReportInput = z.infer<typeof createMonthlyReportSchema>
 
 // 更新用スキーマ（部分的な更新を許可）
-export const updateMonthlyReportSchema = monthlyReportSchema.partial()
+export const updateMonthlyReportSchema = createMonthlyReportSchema.partial().extend({
+  id: z.string().uuid(),
+})
+
+export type UpdateMonthlyReportInput = z.infer<typeof updateMonthlyReportSchema>
+
+// 従来の互換性のため
+export const monthlyReportSchema = createMonthlyReportSchema
+export type MonthlyReportFormData = CreateMonthlyReportInput
