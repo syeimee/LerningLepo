@@ -1,0 +1,62 @@
+[
+  {
+    "id": "report-1",
+    "lessonId": "lesson-1",
+    "teacherId": "teacher-1",
+    "studentId": "student-1",
+    "understanding": 4,
+    "progress": "微分の基本的な計算方法を習得。問題演習を通じて理解が深まった。",
+    "homework": "微分の応用問題 10問",
+    "nextGoal": "積分の基礎に進む",
+    "createdAt": "2025-10-10T12:30:00Z",
+    "updatedAt": "2025-10-10T12:30:00Z"
+  },
+  {
+    "id": "report-2",
+    "lessonId": "lesson-2",
+    "teacherId": "teacher-2",
+    "studentId": "student-1",
+    "understanding": 3,
+    "progress": "運動方程式の理解はできているが、問題への応用にやや課題あり。",
+    "homework": "力学の基礎問題 15問",
+    "nextGoal": "エネルギー保存則の理解",
+    "createdAt": "2025-10-12T16:30:00Z",
+    "updatedAt": "2025-10-12T16:30:00Z"
+  },
+  {
+    "id": "report-3",
+    "lessonId": "lesson-3",
+    "teacherId": "teacher-1",
+    "studentId": "student-2",
+    "understanding": 5,
+    "progress": "ベクトルと行列の基本演算を完全に理解。応用問題も解けるレベル。",
+    "homework": "線形代数の応用問題 8問",
+    "nextGoal": "固有値と固有ベクトルの学習",
+    "createdAt": "2025-10-11T12:30:00Z",
+    "updatedAt": "2025-10-11T12:30:00Z"
+  },
+  {
+    "id": "report-4",
+    "lessonId": "lesson-4",
+    "teacherId": "teacher-5",
+    "studentId": "student-2",
+    "understanding": 4,
+    "progress": "英作文の構成力が向上。文法ミスが減少している。",
+    "homework": "テーマ別英作文 5題",
+    "nextGoal": "長文読解力の強化",
+    "createdAt": "2025-10-13T17:30:00Z",
+    "updatedAt": "2025-10-13T17:30:00Z"
+  },
+  {
+    "id": "report-5",
+    "lessonId": "lesson-5",
+    "teacherId": "teacher-3",
+    "studentId": "student-3",
+    "understanding": 3,
+    "progress": "有機化学の反応機構の基本は理解。立体化学の理解に課題あり。",
+    "homework": "反応機構の問題 12問",
+    "nextGoal": "立体化学の理解を深める",
+    "createdAt": "2025-10-14T15:30:00Z",
+    "updatedAt": "2025-10-14T15:30:00Z"
+  }
+]

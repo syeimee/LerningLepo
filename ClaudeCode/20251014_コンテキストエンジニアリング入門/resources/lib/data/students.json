@@ -1,0 +1,222 @@
+[
+  {
+    "id": "student-1",
+    "name": "田中 太郎",
+    "email": "tanaka.taro@example.com",
+    "phone": "090-1234-5678",
+    "grade": "高3",
+    "targetUniversity": "東京大学理科三類",
+    "weakSubjects": ["物理", "化学"],
+    "createdAt": "2024-01-15T00:00:00Z",
+    "updatedAt": "2024-01-15T00:00:00Z"
+  },
+  {
+    "id": "student-2",
+    "name": "佐藤 花子",
+    "email": "sato.hanako@example.com",
+    "phone": "090-2345-6789",
+    "grade": "高3",
+    "targetUniversity": "京都大学医学部",
+    "weakSubjects": ["数学"],
+    "createdAt": "2024-01-16T00:00:00Z",
+    "updatedAt": "2024-01-16T00:00:00Z"
+  },
+  {
+    "id": "student-3",
+    "name": "鈴木 一郎",
+    "email": "suzuki.ichiro@example.com",
+    "phone": "090-3456-7890",
+    "grade": "高2",
+    "targetUniversity": "大阪大学医学部",
+    "weakSubjects": ["英語", "化学"],
+    "createdAt": "2024-02-01T00:00:00Z",
+    "updatedAt": "2024-02-01T00:00:00Z"
+  },
+  {
+    "id": "student-4",
+    "name": "高橋 美咲",
+    "email": "takahashi.misaki@example.com",
+    "phone": "090-4567-8901",
+    "grade": "高3",
+    "targetUniversity": "慶應義塾大学医学部",
+    "weakSubjects": ["生物"],
+    "createdAt": "2024-02-05T00:00:00Z",
+    "updatedAt": "2024-02-05T00:00:00Z"
+  },
+  {
+    "id": "student-5",
+    "name": "伊藤 健太",
+    "email": "ito.kenta@example.com",
+    "phone": "090-5678-9012",
+    "grade": "高3",
+    "targetUniversity": "東京医科歯科大学",
+    "weakSubjects": ["物理", "数学"],
+    "createdAt": "2024-02-10T00:00:00Z",
+    "updatedAt": "2024-02-10T00:00:00Z"
+  },
+  {
+    "id": "student-6",
+    "name": "渡辺 さくら",
+    "email": "watanabe.sakura@example.com",
+    "phone": "090-6789-0123",
+    "grade": "高2",
+    "targetUniversity": "順天堂大学医学部",
+    "weakSubjects": ["化学"],
+    "createdAt": "2024-02-15T00:00:00Z",
+    "updatedAt": "2024-02-15T00:00:00Z"
+  },
+  {
+    "id": "student-7",
+    "name": "山本 大輔",
+    "email": "yamamoto.daisuke@example.com",
+    "phone": "090-7890-1234",
+    "grade": "高3",
+    "targetUniversity": "名古屋大学医学部",
+    "weakSubjects": ["英語"],
+    "createdAt": "2024-03-01T00:00:00Z",
+    "updatedAt": "2024-03-01T00:00:00Z"
+  },
+  {
+    "id": "student-8",
+    "name": "中村 優子",
+    "email": "nakamura.yuko@example.com",
+    "phone": "090-8901-2345",
+    "grade": "高2",
+    "targetUniversity": "北海道大学医学部",
+    "weakSubjects": ["数学", "物理"],
+    "createdAt": "2024-03-05T00:00:00Z",
+    "updatedAt": "2024-03-05T00:00:00Z"
+  },
+  {
+    "id": "student-9",
+    "name": "小林 翔太",
+    "email": "kobayashi.shota@example.com",
+    "phone": "090-9012-3456",
+    "grade": "高3",
+    "targetUniversity": "九州大学医学部",
+    "weakSubjects": ["生物", "化学"],
+    "createdAt": "2024-03-10T00:00:00Z",
+    "updatedAt": "2024-03-10T00:00:00Z"
+  },
+  {
+    "id": "student-10",
+    "name": "加藤 愛美",
+    "email": "kato.manami@example.com",
+    "phone": "090-0123-4567",
+    "grade": "高3",
+    "targetUniversity": "東北大学医学部",
+    "weakSubjects": ["物理"],
+    "createdAt": "2024-03-15T00:00:00Z",
+    "updatedAt": "2024-03-15T00:00:00Z"
+  },
+  {
+    "id": "student-11",
+    "name": "吉田 涼介",
+    "email": "yoshida.ryosuke@example.com",
+    "phone": "090-1111-2222",
+    "grade": "高2",
+    "targetUniversity": "千葉大学医学部",
+    "weakSubjects": ["英語", "数学"],
+    "createdAt": "2024-04-01T00:00:00Z",
+    "updatedAt": "2024-04-01T00:00:00Z"
+  },
+  {
+    "id": "student-12",
+    "name": "山田 結衣",
+    "email": "yamada.yui@example.com",
+    "phone": "090-2222-3333",
+    "grade": "高3",
+    "targetUniversity": "広島大学医学部",
+    "weakSubjects": ["化学"],
+    "createdAt": "2024-04-05T00:00:00Z",
+    "updatedAt": "2024-04-05T00:00:00Z"
+  },
+  {
+    "id": "student-13",
+    "name": "佐々木 拓也",
+    "email": "sasaki.takuya@example.com",
+    "phone": "090-3333-4444",
+    "grade": "高3",
+    "targetUniversity": "岡山大学医学部",
+    "weakSubjects": ["生物", "英語"],
+    "createdAt": "2024-04-10T00:00:00Z",
+    "updatedAt": "2024-04-10T00:00:00Z"
+  },
+  {
+    "id": "student-14",
+    "name": "松本 彩香",
+    "email": "matsumoto.ayaka@example.com",
+    "phone": "090-4444-5555",
+    "grade": "高2",
+    "targetUniversity": "熊本大学医学部",
+    "weakSubjects": ["数学"],
+    "createdAt": "2024-04-15T00:00:00Z",
+    "updatedAt": "2024-04-15T00:00:00Z"
+  },
+  {
+    "id": "student-15",
+    "name": "井上 隆",
+    "email": "inoue.takashi@example.com",
+    "phone": "090-5555-6666",
+    "grade": "高3",
+    "targetUniversity": "新潟大学医学部",
+    "weakSubjects": ["物理", "化学"],
+    "createdAt": "2024-05-01T00:00:00Z",
+    "updatedAt": "2024-05-01T00:00:00Z"
+  },
+  {
+    "id": "student-16",
+    "name": "木村 真奈美",
+    "email": "kimura.manami@example.com",
+    "phone": "090-6666-7777",
+    "grade": "高2",
+    "targetUniversity": "金沢大学医学部",
+    "weakSubjects": ["英語"],
+    "createdAt": "2024-05-05T00:00:00Z",
+    "updatedAt": "2024-05-05T00:00:00Z"
+  },
+  {
+    "id": "student-17",
+    "name": "林 航平",
+    "email": "hayashi.kohei@example.com",
+    "phone": "090-7777-8888",
+    "grade": "高3",
+    "targetUniversity": "信州大学医学部",
+    "weakSubjects": ["数学", "生物"],
+    "createdAt": "2024-05-10T00:00:00Z",
+    "updatedAt": "2024-05-10T00:00:00Z"
+  },
+  {
+    "id": "student-18",
+    "name": "斎藤 七海",
+    "email": "saito.nanami@example.com",
+    "phone": "090-8888-9999",
+    "grade": "高3",
+    "targetUniversity": "浜松医科大学",
+    "weakSubjects": ["化学"],
+    "createdAt": "2024-05-15T00:00:00Z",
+    "updatedAt": "2024-05-15T00:00:00Z"
+  },
+  {
+    "id": "student-19",
+    "name": "清水 聡",
+    "email": "shimizu.satoshi@example.com",
+    "phone": "090-9999-0000",
+    "grade": "高2",
+    "targetUniversity": "山口大学医学部",
+    "weakSubjects": ["物理", "英語"],
+    "createdAt": "2024-06-01T00:00:00Z",
+    "updatedAt": "2024-06-01T00:00:00Z"
+  },
+  {
+    "id": "student-20",
+    "name": "森 美月",
+    "email": "mori.mizuki@example.com",
+    "phone": "090-0000-1111",
+    "grade": "高3",
+    "targetUniversity": "愛媛大学医学部",
+    "weakSubjects": ["生物"],
+    "createdAt": "2024-06-05T00:00:00Z",
+    "updatedAt": "2024-06-05T00:00:00Z"
+  }
+]
