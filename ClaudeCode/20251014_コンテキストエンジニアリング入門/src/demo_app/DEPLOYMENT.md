@@ -20,6 +20,7 @@
 ```bash
 openssl rand -base64 32
 ```
+
 ## 2. Vercelへのデプロイ
 
 ### 方法1: Vercel CLIを使用
@@ -55,7 +56,7 @@ Vercelダッシュボードの「Settings」→「Environment Variables」で以
 
 ```bash
 # Database (Supabase)
-DATABASE_URL=<Supabase PostgreSQL接続文字列>
+DATABASE_URL=postgresql://postgres:YOUR_PASSWORD@db.xxx.supabase.co:5432/postgres
 
 # NextAuth
 NEXTAUTH_URL=https://YOUR_DOMAIN.vercel.app
