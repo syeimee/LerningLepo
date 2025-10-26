@@ -227,12 +227,14 @@ export default function SchedulePage() {
         userRole={currentUser?.role === 'TEACHER' ? 'TEACHER' : 'STUDENT'}
       />
 
-      <MatchingDialog
-        open={matchingDialogOpen}
-        onClose={() => setMatchingDialogOpen(false)}
-        scheduleRequests={scheduleRequests}
-        onMatch={handleMatch}
-      />
+      {currentUser?.role === 'ADMIN' && (
+        <MatchingDialog
+          open={matchingDialogOpen}
+          onClose={() => setMatchingDialogOpen(false)}
+          scheduleRequests={scheduleRequests}
+          onMatch={handleMatch}
+        />
+      )}
 
       {/* 講師・生徒ビューの場合のみ希望申請一覧を表示 */}
       {(currentUser?.role === 'TEACHER' || currentUser?.role === 'STUDENT') && (

@@ -36,16 +36,21 @@ export default function DailyReportForm({ open, onClose, onSubmit }: DailyReport
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<DailyReportFormData>({
+  } = useForm({
     resolver: zodResolver(dailyReportSchema),
     defaultValues: {
       lessonId: '',
       studentId: '',
       teacherId: '',
+      subject: '',
+      lessonDate: '',
+      theme: '',
+      content: '',
+      materials: '',
       understanding: 3,
-      progress: '',
       homework: '',
-      nextGoal: '',
+      nextPlan: '',
+      remarks: '',
     },
   })
 
@@ -85,8 +90,8 @@ export default function DailyReportForm({ open, onClose, onSubmit }: DailyReport
     }
   }
 
-  const handleFormSubmit = (data: DailyReportFormData) => {
-    onSubmit(data)
+  const handleFormSubmit = (data: any) => {
+    onSubmit(data as DailyReportFormData)
     reset()
     onClose()
   }
@@ -204,24 +209,6 @@ export default function DailyReportForm({ open, onClose, onSubmit }: DailyReport
               />
             </Box>
 
-            {/* 進捗 */}
-            <Controller
-              name="progress"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="進捗"
-                  error={!!errors.progress}
-                  helperText={errors.progress?.message}
-                  multiline
-                  rows={3}
-                  fullWidth
-                  placeholder="今日の授業で学習した内容を入力してください"
-                />
-              )}
-            />
-
             {/* 宿題 */}
             <Controller
               name="homework"
@@ -242,14 +229,14 @@ export default function DailyReportForm({ open, onClose, onSubmit }: DailyReport
 
             {/* 次回目標 */}
             <Controller
-              name="nextGoal"
+              name="nextPlan"
               control={control}
               render={({ field }) => (
                 <TextField
                   {...field}
                   label="次回目標"
-                  error={!!errors.nextGoal}
-                  helperText={errors.nextGoal?.message}
+                  error={!!errors.nextPlan}
+                  helperText={errors.nextPlan?.message}
                   multiline
                   rows={2}
                   fullWidth

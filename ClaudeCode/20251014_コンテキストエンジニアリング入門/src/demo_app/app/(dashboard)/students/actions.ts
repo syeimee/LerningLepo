@@ -117,3 +117,46 @@ export async function getStudentById(id: string) {
     return { success: false, error: '生徒の取得に失敗しました' }
   }
 }
+
+// IDで生徒詳細を取得（授業履歴、日報、月報を含む）
+export async function getStudentDetails(id: string) {
+  try {
+    const student = await prisma.student.findUnique({
+      where: { id },
+      include: {
+        lessons: {
+          orderBy: {
+            date: 'desc',
+          },
+          take: 20, // 最新20件
+          include: {
+            teacher: true,
+            dailyReport: true,
+          },
+        },
+        dailyReports: {
+          orderBy: {
+            lessonDate: 'desc',
+          },
+          take: 10, // 最新10件
+        },
+        monthlyReports: {
+          orderBy: [
+            { year: 'desc' },
+            { month: 'desc' },
+          ],
+          take: 6, // 最新6ヶ月
+        },
+      },
+    })
+
+    if (!student) {
+      return { success: false, error: '生徒が見つかりませんでした' }
+    }
+
+    return { success: true, data: student }
+  } catch (error) {
+    console.error('生徒詳細取得エラー:', error)
+    return { success: false, error: '生徒詳細の取得に失敗しました' }
+  }
+}

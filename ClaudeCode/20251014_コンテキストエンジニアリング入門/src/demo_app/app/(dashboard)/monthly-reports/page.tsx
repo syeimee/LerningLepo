@@ -38,21 +38,30 @@ export default function MonthlyReportsPage() {
   const [formOpen, setFormOpen] = useState(false)
 
   const handleFormSubmit = (data: MonthlyReportFormData) => {
+    // MonthlyReportFormDataをlib/dataのMonthlyReport型に変換
+    const evaluationMap: Record<number, '◎' | '○' | '△'> = {
+      3: '◎',
+      2: '○',
+      1: '△',
+    }
+
     const newReport: MonthlyReport = {
       id: `report-${Date.now()}`,
-      month: data.month,
+      month: `${data.year}-${String(data.month).padStart(2, '0')}`,
       studentId: data.studentId,
-      teacherId: CURRENT_TEACHER_ID,
+      teacherId: data.teacherId,
       subject: data.subject,
-      lessonCount: data.lessonCount,
-      absenceCount: data.absenceCount,
+      lessonCount: data.totalLessons,
+      absenceCount: data.absences,
       lateCount: data.lateCount,
-      learningMotivation: data.learningMotivation,
-      homeworkEngagement: data.homeworkEngagement,
-      reviewEngagement: data.reviewEngagement,
+      learningMotivation: evaluationMap[data.learningMotivation] || '○',
+      homeworkEngagement: evaluationMap[data.homeworkEngagement] || '○',
+      reviewEngagement: evaluationMap[data.reviewEngagement] || '○',
       lessonContent: data.lessonContent,
-      understanding: data.understanding,
-      weeklyTestDates: data.weeklyTestDates,
+      understanding: data.comprehension,
+      weeklyTestDates: data.weeklyTestDates?.map(d =>
+        typeof d === 'string' ? d : d instanceof Date ? d.toISOString().split('T')[0] : null
+      ) || [],
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     }

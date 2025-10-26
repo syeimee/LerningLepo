@@ -64,7 +64,7 @@ export default function Header({ onMenuClick, session }: HeaderProps) {
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, color: 'white'}}>
-          中田学習会
+          医進館
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <Chip

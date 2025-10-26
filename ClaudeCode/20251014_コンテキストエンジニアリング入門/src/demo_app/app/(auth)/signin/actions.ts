@@ -2,10 +2,11 @@
 
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { dummyUsers } from '@/lib/dummyUsers'
+import { getDevUserById, getDevUsers } from '@/lib/devUsers'
+import { signIn } from '@/auth'
 
 export async function dummySignIn(userId: string) {
-  const user = dummyUsers.find((u) => u.id === userId)
+  const user = await getDevUserById(userId)
 
   if (!user) {
     return { error: 'ユーザーが見つかりません' }
@@ -42,4 +43,12 @@ export async function getDummySession() {
   } catch {
     return null
   }
+}
+
+export async function getDevUsersAction() {
+  return await getDevUsers()
+}
+
+export async function googleSignIn() {
+  await signIn('google', { redirectTo: '/dashboard' })
 }
