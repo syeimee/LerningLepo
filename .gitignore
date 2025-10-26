@@ -27,4 +27,4 @@ Unity/**/*.exe
 Unity/**/*.app
 Unity/**/*.xcodeproj
 
-
+.env

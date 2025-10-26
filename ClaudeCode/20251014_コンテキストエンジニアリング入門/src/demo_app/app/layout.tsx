@@ -5,6 +5,14 @@ import ThemeProvider from '@/components/ThemeProvider'
 export const metadata: Metadata = {
   title: '学習塾向け管理システム EDUREP',
   description: '学習塾向けの管理システムデモアプリケーションです。',
+  robots: {
+    index: false,
+    follow: false,
+    googleBot: {
+      index: false,
+      follow: false,
+    },
+  },
 }
 
 export default function RootLayout({

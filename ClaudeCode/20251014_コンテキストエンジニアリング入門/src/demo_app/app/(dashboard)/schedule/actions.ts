@@ -106,6 +106,7 @@ export async function createLesson(input: unknown) {
 
     // キャッシュを再検証
     revalidatePath('/schedule')
+    revalidatePath('/dashboard') // ダッシュボードの授業数を更新
 
     return { success: true, data: lesson }
   } catch (error) {
@@ -177,6 +178,7 @@ export async function updateLesson(input: unknown) {
     // キャッシュを再検証
     revalidatePath('/schedule')
     revalidatePath(`/schedule/${id}`)
+    revalidatePath('/dashboard') // ダッシュボードの授業数を更新
 
     return { success: true, data: lesson }
   } catch (error) {
@@ -203,6 +205,7 @@ export async function cancelLesson(id: string) {
 
     // キャッシュを再検証
     revalidatePath('/schedule')
+    revalidatePath('/dashboard') // ダッシュボードの授業数を更新
 
     return { success: true, data: lesson }
   } catch (error) {

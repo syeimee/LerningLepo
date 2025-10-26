@@ -12,21 +12,55 @@ import {
   TableHead,
   TableRow,
   Button,
+  CircularProgress,
 } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import { useState } from 'react'
 import AddStudents from './AddStudents'
-import type { Student } from '@prisma/client'
+import StudentDetails from './StudentDetails'
+import { getStudentDetails } from '@/app/(dashboard)/students/actions'
+import type { Student, Lesson, DailyReport, MonthlyReport, Teacher } from '@prisma/client'
 
 interface StudentsListProps {
   initialStudents: Student[]
 }
 
+type StudentWithDetails = Student & {
+  lessons: (Lesson & { teacher: Teacher; dailyReport: DailyReport | null })[]
+  dailyReports: DailyReport[]
+  monthlyReports: MonthlyReport[]
+}
+
 export default function StudentsList({ initialStudents }: StudentsListProps) {
   const [isOpen, setIsOpen] = useState(false)
+  const [detailsOpen, setDetailsOpen] = useState(false)
+  const [selectedStudent, setSelectedStudent] = useState<StudentWithDetails | null>(null)
+  const [isLoadingDetails, setIsLoadingDetails] = useState(false)
 
   const toggleOpen = () => {
     setIsOpen(!isOpen)
+  }
+
+  const handleViewDetails = async (studentId: string) => {
+    setIsLoadingDetails(true)
+    try {
+      const result = await getStudentDetails(studentId)
+      if (result.success && result.data) {
+        setSelectedStudent(result.data)
+        setDetailsOpen(true)
+      } else {
+        console.error('生徒詳細の取得に失敗しました:', result.error)
+      }
+    } catch (error) {
+      console.error('生徒詳細の取得中にエラーが発生しました:', error)
+    } finally {
+      setIsLoadingDetails(false)
+    }
+  }
+
+  const handleCloseDetails = () => {
+    setDetailsOpen(false)
+    setSelectedStudent(null)
   }
 
   return (
@@ -71,8 +105,13 @@ export default function StudentsList({ initialStudents }: StudentsListProps) {
                   </Typography>
                 </TableCell>
                 <TableCell align="right">
-                  <Button size="small" variant="outlined">
-                    詳細
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    onClick={() => handleViewDetails(student.id)}
+                    disabled={isLoadingDetails}
+                  >
+                    {isLoadingDetails ? <CircularProgress size={20} /> : '詳細'}
                   </Button>
                 </TableCell>
               </TableRow>
@@ -81,6 +120,13 @@ export default function StudentsList({ initialStudents }: StudentsListProps) {
         </Table>
       </TableContainer>
       <AddStudents isOpen={isOpen} toggleOpen={toggleOpen} />
+      {selectedStudent && (
+        <StudentDetails
+          student={selectedStudent}
+          isOpen={detailsOpen}
+          onClose={handleCloseDetails}
+        />
+      )}
     </Container>
   )
 }

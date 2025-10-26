@@ -16,12 +16,11 @@ import {
   MenuItem,
   Alert,
 } from '@mui/material'
+import type { Student, Teacher } from '@prisma/client'
 import {
   type ScheduleRequest,
   getStudentById,
   getTeacherById,
-  teachers,
-  students,
 } from '@/lib/data'
 import { TIME_PERIODS } from '@/lib/utils/schedule'
 import { useState } from 'react'
@@ -37,6 +36,8 @@ interface MatchingDialogProps {
     date: string,
     timeSlot: number
   ) => void
+  students: Student[]
+  teachers: (Teacher & { user: { id: string; email: string; name: string | null; role: string } })[]
 }
 
 export default function MatchingDialog({
@@ -44,6 +45,8 @@ export default function MatchingDialog({
   onClose,
   scheduleRequests,
   onMatch,
+  students,
+  teachers,
 }: MatchingDialogProps) {
   const [selectedRequest, setSelectedRequest] = useState<string | null>(null)
   const [matchedTeacherId, setMatchedTeacherId] = useState('')
@@ -63,18 +66,12 @@ export default function MatchingDialog({
     const request = pendingRequests.find((r) => r.id === requestId)
     if (request) {
       setSelectedRequest(requestId)
-      // 講師からの希望の場合、講師IDを自動設定
-      if (request.teacherId) {
-        setMatchedTeacherId(request.teacherId)
-      } else {
-        setMatchedTeacherId('')
-      }
-      // 生徒からの希望の場合、生徒IDを自動設定
-      if (request.studentId) {
-        setMatchedStudentId(request.studentId)
-      } else {
-        setMatchedStudentId('')
-      }
+
+      // データベースから取得した正しいIDを使用するため、自動設定はしない
+      // 管理者が手動で選択する
+      setMatchedTeacherId('')
+      setMatchedStudentId('')
+
       // 希望日と時限の最初の候補を設定
       if (request.preferredDates.length > 0) {
         setSelectedDate(request.preferredDates[0])
@@ -186,11 +183,10 @@ export default function MatchingDialog({
                       fullWidth
                       sx={{ mb: 2 }}
                       size="small"
-                      disabled={!!selectedRequestData.teacherId}
                     >
                       {teachers.map((teacher) => (
                         <MenuItem key={teacher.id} value={teacher.id}>
-                          {teacher.name} ({teacher.subjects.join(', ')})
+                          {teacher.lastName} {teacher.firstName} ({teacher.subjects.join(', ')})
                         </MenuItem>
                       ))}
                     </TextField>
@@ -204,11 +200,10 @@ export default function MatchingDialog({
                       fullWidth
                       sx={{ mb: 2 }}
                       size="small"
-                      disabled={!!selectedRequestData.studentId}
                     >
                       {students.map((student) => (
                         <MenuItem key={student.id} value={student.id}>
-                          {student.name}
+                          {student.lastName} {student.firstName}
                         </MenuItem>
                       ))}
                     </TextField>

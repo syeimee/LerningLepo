@@ -53,7 +53,11 @@ export default function Header({ onMenuClick, session }: HeaderProps) {
 
   return (
     <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
-      <Toolbar>
+      <Toolbar
+          sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',}}>
         <IconButton
           color="inherit"
           aria-label="open drawer"
@@ -63,9 +67,22 @@ export default function Header({ onMenuClick, session }: HeaderProps) {
         >
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, color: 'white'}}>
-          中田学習会
-        </Typography>
+        {/* <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, color: 'white'}}>
+          医進会
+        </Typography> */}
+                  {/* ▼ ロゴ画像部分 */}
+          <Box
+            component="img"
+            src="/logo/logo.png"
+            alt="医進館ロゴ"
+            sx={{
+              height: 40,
+              width: 'auto',
+              objectFit: 'contain',
+              display: 'block',
+            }}
+          />
+        <Box sx={{ flexGrow: 1 }} />
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <Chip
             label={getRoleLabel(session.user?.role || '')}

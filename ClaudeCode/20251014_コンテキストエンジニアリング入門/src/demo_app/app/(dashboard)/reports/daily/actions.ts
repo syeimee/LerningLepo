@@ -77,6 +77,7 @@ export async function createDailyReport(input: unknown) {
     // キャッシュを再検証
     revalidatePath('/reports/daily')
     revalidatePath('/schedule')
+    revalidatePath('/dashboard') // ダッシュボードの未提出日報一覧を更新
 
     return { success: true, data: result }
   } catch (error) {
@@ -117,6 +118,7 @@ export async function updateDailyReport(input: unknown) {
     // キャッシュを再検証
     revalidatePath('/reports/daily')
     revalidatePath(`/reports/daily/${id}`)
+    revalidatePath('/dashboard') // ダッシュボードの表示を更新
 
     return { success: true, data: report }
   } catch (error) {
@@ -158,6 +160,7 @@ export async function deleteDailyReport(id: string) {
     // キャッシュを再検証
     revalidatePath('/reports/daily')
     revalidatePath('/schedule')
+    revalidatePath('/dashboard') // ダッシュボードの未提出日報一覧を更新
 
     return { success: true }
   } catch (error) {

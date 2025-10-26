@@ -45,26 +45,32 @@ export default function MonthlyReportForm({
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<MonthlyReportFormData>({
+  } = useForm({
     resolver: zodResolver(monthlyReportSchema),
     defaultValues: {
-      month: '',
       studentId: '',
+      teacherId: _teacherId || '',
       subject: '',
-      lessonCount: 0,
-      absenceCount: 0,
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1,
+      totalLessons: 0,
+      absences: 0,
       lateCount: 0,
-      learningMotivation: '○',
-      homeworkEngagement: '○',
-      reviewEngagement: '○',
+      learningMotivation: 2,
+      homeworkEngagement: 2,
+      reviewEngagement: 2,
       lessonContent: '',
-      understanding: '',
-      weeklyTestDates: [null, null, null, null],
+      comprehension: '',
+      weeklyTestDates: [],
+      weeklyTestTopics: [],
+      weeklyTestScores: [],
+      weeklyTestPassingScores: [],
+      overallComment: '',
     },
   })
 
-  const handleFormSubmit = (data: MonthlyReportFormData) => {
-    onSubmit(data)
+  const handleFormSubmit = (data: any) => {
+    onSubmit(data as MonthlyReportFormData)
     reset()
     onClose()
   }
@@ -169,7 +175,7 @@ export default function MonthlyReportForm({
 
             <Grid item xs={12} sm={4}>
               <Controller
-                name="lessonCount"
+                name="totalLessons"
                 control={control}
                 render={({ field }) => (
                   <TextField
@@ -177,8 +183,8 @@ export default function MonthlyReportForm({
                     label="授業回数"
                     type="number"
                     fullWidth
-                    error={!!errors.lessonCount}
-                    helperText={errors.lessonCount?.message}
+                    error={!!errors.totalLessons}
+                    helperText={errors.totalLessons?.message}
                     onChange={(e) => field.onChange(Number(e.target.value))}
                   />
                 )}
@@ -187,7 +193,7 @@ export default function MonthlyReportForm({
 
             <Grid item xs={12} sm={4}>
               <Controller
-                name="absenceCount"
+                name="absences"
                 control={control}
                 render={({ field }) => (
                   <TextField
@@ -195,8 +201,8 @@ export default function MonthlyReportForm({
                     label="欠席回数"
                     type="number"
                     fullWidth
-                    error={!!errors.absenceCount}
-                    helperText={errors.absenceCount?.message}
+                    error={!!errors.absences}
+                    helperText={errors.absences?.message}
                     onChange={(e) => field.onChange(Number(e.target.value))}
                   />
                 )}
@@ -336,7 +342,7 @@ export default function MonthlyReportForm({
 
             <Grid item xs={12}>
               <Controller
-                name="understanding"
+                name="comprehension"
                 control={control}
                 render={({ field }) => (
                   <TextField
@@ -345,10 +351,10 @@ export default function MonthlyReportForm({
                     multiline
                     rows={4}
                     fullWidth
-                    error={!!errors.understanding}
+                    error={!!errors.comprehension}
                     helperText={
-                      errors.understanding?.message ||
-                      `${field.value?.length || 0}/500文字`
+                      errors.comprehension?.message ||
+                      `${(field.value as string)?.length || 0}/500文字`
                     }
                     inputProps={{ maxLength: 500 }}
                   />

@@ -5,7 +5,6 @@ import { Box, Toolbar } from '@mui/material'
 import Header from '@/components/layout/Header'
 import Sidebar from '@/components/layout/Sidebar'
 import type { Session } from 'next-auth'
-import { getDummyUserById } from '@/lib/dummyUsers'
 import { SessionProvider } from '@/contexts/SessionContext'
 import { DataProvider } from '@/contexts/DataContext'
 
@@ -16,7 +15,6 @@ interface DashboardClientProps {
 
 export default function DashboardClient({ children, session: initialSession }: DashboardClientProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [currentSession, setCurrentSession] = useState<Session>(initialSession)
 
   const handleSidebarToggle = () => {
     setSidebarOpen(!sidebarOpen)
@@ -26,38 +24,18 @@ export default function DashboardClient({ children, session: initialSession }: D
     setSidebarOpen(false)
   }
 
-  const handleUserChange = (userId: string) => {
-    const newUser = getDummyUserById(userId)
-    if (newUser) {
-      setCurrentSession({
-        ...currentSession,
-        user: {
-          id: newUser.id,
-          name: newUser.name || undefined,
-          email: newUser.email || undefined,
-          image: newUser.image || undefined,
-          role: newUser.role,
-          ...(newUser.teacherId && { teacherId: newUser.teacherId }),
-          ...(newUser.studentId && { studentId: newUser.studentId }),
-        },
-        expires: '2099-12-31',
-      })
-    }
-  }
-
   return (
-    <SessionProvider session={currentSession}>
+    <SessionProvider session={initialSession}>
       <DataProvider>
         <Box sx={{ display: 'flex' }}>
           <Header
             onMenuClick={handleSidebarToggle}
-            session={currentSession}
-            onUserChange={handleUserChange}
+            session={initialSession}
           />
           <Sidebar
             open={sidebarOpen}
             onClose={handleSidebarClose}
-            userRole={currentSession.user?.role as 'ADMIN' | 'TEACHER' | 'STUDENT'}
+            userRole={initialSession.user?.role}
           />
           <Box
             component="main"

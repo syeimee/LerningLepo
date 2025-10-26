@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { Typography, Box, Button } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import EventAvailableIcon from '@mui/icons-material/EventAvailable'
@@ -8,6 +8,8 @@ import type { Lesson, Student, Teacher, DailyReport } from '@prisma/client'
 import { getWeekStart, getWeekDates, formatDate, TIME_PERIODS, type TimetableData } from '@/lib/utils/schedule'
 import { scheduleRequests as initialScheduleRequests, type ScheduleRequest } from '@/lib/data'
 import { createLesson } from '@/app/(dashboard)/schedule/actions'
+import { getStudents } from '@/app/(dashboard)/students/actions'
+import { getTeachers } from '@/app/(dashboard)/teachers/actions'
 import { useRouter } from 'next/navigation'
 import { useSession } from '@/contexts/SessionContext'
 import WeekSelector from './WeekSelector'
@@ -30,6 +32,7 @@ interface ScheduleViewProps {
 
 export default function ScheduleView({ initialLessons }: ScheduleViewProps) {
   const router = useRouter()
+  const { session } = useSession()
   const [currentWeekStart, setCurrentWeekStart] = useState<Date>(getWeekStart(new Date()))
   const [lessons] = useState(initialLessons)
   const [addLessonOpen, setAddLessonOpen] = useState(false)
@@ -39,37 +42,32 @@ export default function ScheduleView({ initialLessons }: ScheduleViewProps) {
   const [requestFormOpen, setRequestFormOpen] = useState(false)
   const [matchingDialogOpen, setMatchingDialogOpen] = useState(false)
 
-  // TODO: 実際の認証システムからユーザー情報を取得
-  // 仮のユーザー情報（テスト用）
-  // 以下のTEST_ROLEを変更してテストしてください：'ADMIN' | 'TEACHER' | 'STUDENT'
+  // 生徒と講師のデータ
+  const [students, setStudents] = useState<Student[]>([])
+  const [teachers, setTeachers] = useState<(Teacher & { user: { id: string; email: string; name: string | null; role: string } })[]>([])
 
-  const TEST_ROLE: 'ADMIN' | 'TEACHER' | 'STUDENT' = 'ADMIN' // ここを変更してテスト
+  // セッションからユーザー情報を取得
+  const currentUser = session?.user
 
-  const currentUser: {
-    id: string
-    name: string
-    email: string
-    role: 'ADMIN' | 'TEACHER' | 'STUDENT'
-  } = TEST_ROLE === 'ADMIN'
-    ? {
-        id: 'admin-1',
-        name: '管理者',
-        email: 'admin@school.example.com',
-        role: 'ADMIN',
+  // 生徒と講師のデータを取得
+  useEffect(() => {
+    const fetchData = async () => {
+      const [studentsResult, teachersResult] = await Promise.all([
+        getStudents(),
+        getTeachers(),
+      ])
+
+      if (studentsResult.success && studentsResult.data) {
+        setStudents(studentsResult.data)
       }
-    : TEST_ROLE === 'TEACHER'
-    ? {
-        id: 'teacher-1',
-        name: '山田太郎（講師）',
-        email: 'yamada.taro@school.example.com',
-        role: 'TEACHER',
+
+      if (teachersResult.success && teachersResult.data) {
+        setTeachers(teachersResult.data)
       }
-    : {
-        id: 'student-1',
-        name: '田中太郎（生徒）',
-        email: 'tanaka.taro@example.com',
-        role: 'STUDENT',
-      }
+    }
+
+    fetchData()
+  }, [])
 
   const handlePrevWeek = () => {
     const newWeekStart = new Date(currentWeekStart)
@@ -88,9 +86,9 @@ export default function ScheduleView({ initialLessons }: ScheduleViewProps) {
     const newRequest: ScheduleRequest = {
       id: `request-${Date.now()}`,
       requesterId: currentUser?.id || '',
-      requesterRole: currentUser?.role || 'STUDENT',
-      teacherId: currentUser?.role === 'TEACHER' ? 'teacher-1' : undefined,
-      studentId: currentUser?.role === 'STUDENT' ? 'student-1' : undefined,
+      requesterRole: currentUser?.role || 'TEACHER',
+      teacherId: currentUser?.role === 'TEACHER' ? (currentUser as any)?.teacherId : undefined,
+      studentId: undefined,
       subject: data.subject,
       preferredDates: data.preferredDates,
       preferredTimeSlots: data.preferredTimeSlots,
@@ -112,43 +110,63 @@ export default function ScheduleView({ initialLessons }: ScheduleViewProps) {
     date: string,
     timeSlot: number
   ) => {
-    // 希望申請のステータスを更新
-    const updatedRequests = scheduleRequests.map((request) =>
-      request.id === requestId ? { ...request, status: 'MATCHED' as const } : request
-    )
-    setScheduleRequests(updatedRequests)
+    try {
+      // 時限から開始時刻と終了時刻を取得
+      const timePeriod = TIME_PERIODS.find((tp) => tp.period === timeSlot)
+      if (!timePeriod) {
+        console.error('時限が見つかりません:', timeSlot)
+        alert('時限が見つかりません')
+        return
+      }
 
-    // 時限から開始時刻と終了時刻を取得
-    const timePeriod = TIME_PERIODS.find((tp) => tp.period === timeSlot)
-    if (!timePeriod) {
-      console.error('時限が見つかりません:', timeSlot)
-      return
-    }
+      // 希望申請から科目を取得
+      const request = scheduleRequests.find((r) => r.id === requestId)
+      if (!request) {
+        console.error('希望申請が見つかりません:', requestId)
+        alert('希望申請が見つかりません')
+        return
+      }
 
-    // 希望申請から科目を取得
-    const request = scheduleRequests.find((r) => r.id === requestId)
-    if (!request) {
-      console.error('希望申請が見つかりません:', requestId)
-      return
-    }
+      console.log('授業作成データ:', {
+        studentId: matchedStudentId,
+        teacherId: matchedTeacherId,
+        subject: request.subject,
+        date: date,
+        startTime: timePeriod.startTime,
+        endTime: timePeriod.endTime,
+        notes: `希望申請から自動作成: ${request.notes}`,
+      })
 
-    // Server Actionを呼んで授業を作成
-    const result = await createLesson({
-      studentId: matchedStudentId,
-      teacherId: matchedTeacherId,
-      subject: request.subject,
-      date: date,
-      startTime: timePeriod.startTime,
-      endTime: timePeriod.endTime,
-      notes: `希望申請から自動作成: ${request.notes}`,
-    })
+      // Server Actionを呼んで授業を作成
+      const result = await createLesson({
+        studentId: matchedStudentId,
+        teacherId: matchedTeacherId,
+        subject: request.subject,
+        date: date,
+        startTime: timePeriod.startTime,
+        endTime: timePeriod.endTime,
+        notes: `希望申請から自動作成: ${request.notes}`,
+      })
 
-    if (result.success) {
-      // ページをリフレッシュしてデータを再取得
-      router.refresh()
-    } else {
-      console.error('授業作成エラー:', result.error)
-      alert(`授業の作成に失敗しました: ${result.error}`)
+      console.log('授業作成結果:', result)
+
+      if (result.success) {
+        // 希望申請のステータスを更新
+        const updatedRequests = scheduleRequests.map((req) =>
+          req.id === requestId ? { ...req, status: 'MATCHED' as const } : req
+        )
+        setScheduleRequests(updatedRequests)
+
+        // ページをリフレッシュしてデータを再取得
+        router.refresh()
+        alert('授業を作成しました')
+      } else {
+        console.error('授業作成エラー:', result.error)
+        alert(`授業の作成に失敗しました: ${result.error}`)
+      }
+    } catch (error) {
+      console.error('マッチング処理エラー:', error)
+      alert(`エラーが発生しました: ${error instanceof Error ? error.message : '不明なエラー'}`)
     }
   }
 
@@ -228,7 +246,7 @@ export default function ScheduleView({ initialLessons }: ScheduleViewProps) {
           </Typography>
         </div>
         <Box sx={{ display: 'flex', gap: 2 }}>
-          {(currentUser?.role === 'TEACHER' || currentUser?.role === 'STUDENT') && (
+          {currentUser?.role === 'TEACHER' && (
             <Button
               variant="outlined"
               startIcon={<EventAvailableIcon />}
@@ -269,16 +287,20 @@ export default function ScheduleView({ initialLessons }: ScheduleViewProps) {
         userRole={currentUser?.role === 'TEACHER' ? 'TEACHER' : 'STUDENT'}
       />
 
-      {/* マッチングダイアログ */}
-      <MatchingDialog
-        open={matchingDialogOpen}
-        onClose={() => setMatchingDialogOpen(false)}
-        scheduleRequests={scheduleRequests}
-        onMatch={handleMatch}
-      />
+      {/* マッチングダイアログ - 管理者のみ表示 */}
+      {currentUser?.role === 'ADMIN' && (
+        <MatchingDialog
+          open={matchingDialogOpen}
+          onClose={() => setMatchingDialogOpen(false)}
+          scheduleRequests={scheduleRequests}
+          onMatch={handleMatch}
+          students={students}
+          teachers={teachers}
+        />
+      )}
 
-      {/* 講師・生徒ビューの場合のみ希望申請一覧を表示（時間割の上に） */}
-      {(currentUser?.role === 'TEACHER' || currentUser?.role === 'STUDENT') && (
+      {/* 講師ビューの場合のみ希望申請一覧を表示（時間割の上に） */}
+      {currentUser?.role === 'TEACHER' && (
         <Box sx={{ mb: 3 }}>
           <MyScheduleRequests scheduleRequests={scheduleRequests} userId={currentUser?.id || ''} />
         </Box>

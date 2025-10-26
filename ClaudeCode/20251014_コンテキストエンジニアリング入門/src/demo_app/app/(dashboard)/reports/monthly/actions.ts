@@ -68,6 +68,7 @@ export async function createMonthlyReport(input: unknown) {
 
     // キャッシュを再検証
     revalidatePath('/reports/monthly')
+    revalidatePath('/dashboard') // ダッシュボードの表示を更新
 
     return { success: true, data: report }
   } catch (error) {
@@ -109,6 +110,7 @@ export async function updateMonthlyReport(input: unknown) {
     // キャッシュを再検証
     revalidatePath('/reports/monthly')
     revalidatePath(`/reports/monthly/${id}`)
+    revalidatePath('/dashboard') // ダッシュボードの表示を更新
 
     return { success: true, data: report }
   } catch (error) {
@@ -131,6 +133,7 @@ export async function deleteMonthlyReport(id: string) {
 
     // キャッシュを再検証
     revalidatePath('/reports/monthly')
+    revalidatePath('/dashboard') // ダッシュボードの表示を更新
 
     return { success: true }
   } catch (error) {

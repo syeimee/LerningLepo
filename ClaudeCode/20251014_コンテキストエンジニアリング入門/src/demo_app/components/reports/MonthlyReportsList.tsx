@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import {
   Paper,
   Table,
@@ -59,6 +59,11 @@ export default function MonthlyReportsList({ initialReports }: MonthlyReportsLis
   const [exportModalOpen, setExportModalOpen] = useState(false)
   const [exportStatus, setExportStatus] = useState<'loading' | 'success' | 'error'>('loading')
   const [exportProgress, setExportProgress] = useState(0)
+
+  // initialReportsが変わったらreportsを更新（Server Componentからの再検証時）
+  useEffect(() => {
+    setReports(initialReports)
+  }, [initialReports])
 
   // 現在の年月を取得
   const today = new Date()

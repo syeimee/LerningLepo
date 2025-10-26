@@ -65,7 +65,8 @@ export default function ExportMonthlyReportsPage() {
 
   // 仮のユーザーロール（実際はsessionから取得）
   // TODO: sessionから取得するように修正
-  const userRole = 'ADMIN' // 'ADMIN' | 'TEACHER' | 'STUDENT'
+  const getUserRole = (): 'ADMIN' | 'TEACHER' | 'STUDENT' => 'ADMIN' as const
+  const userRole = getUserRole()
   const currentTeacherId = 'teacher-1' // 講師の場合のID
 
   const [selectedStudents, setSelectedStudents] = useState<string[]>([])

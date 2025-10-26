@@ -7,26 +7,29 @@ export const createMonthlyReportSchema = z
     subject: z.string().min(1, '科目は必須です'),
     year: z.number().int().min(2020, '有効な年を入力してください'),
     month: z.number().int().min(1).max(12, '月は1〜12の範囲で入力してください'),
-    totalLessons: z.number().int().min(0, '授業回数は0以上である必要があります').default(0),
-    absences: z.number().int().min(0, '欠席数は0以上である必要があります').default(0),
-    lateCount: z.number().int().min(0, '遅刻数は0以上である必要があります').default(0),
+    totalLessons: z.number().int().min(0, '授業回数は0以上である必要があります').optional().default(0),
+    absences: z.number().int().min(0, '欠席数は0以上である必要があります').optional().default(0),
+    lateCount: z.number().int().min(0, '遅刻数は0以上である必要があります').optional().default(0),
     learningMotivation: z
       .number()
       .int()
       .min(1)
       .max(3, '学習意欲は1〜3の範囲で入力してください')
+      .optional()
       .default(2),
     homeworkEngagement: z
       .number()
       .int()
       .min(1)
       .max(3, '課題・宿題の取り組みは1〜3の範囲で入力してください')
+      .optional()
       .default(2),
     reviewEngagement: z
       .number()
       .int()
       .min(1)
       .max(3, '復習の取り組みは1〜3の範囲で入力してください')
+      .optional()
       .default(2),
     lessonContent: z
       .string()

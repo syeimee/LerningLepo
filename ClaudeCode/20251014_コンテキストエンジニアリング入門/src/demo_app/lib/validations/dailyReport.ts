@@ -9,7 +9,7 @@ export const createDailyReportSchema = z.object({
   theme: z.string().min(1, 'テーマを入力してください'),
   content: z.string().min(1, '授業内容を入力してください'),
   materials: z.string().optional(),
-  understanding: z.number().min(1, '理解度は1以上です').max(5, '理解度は5以下です').default(3),
+  understanding: z.number().min(1, '理解度は1以上です').max(5, '理解度は5以下です').optional().default(3),
   homework: z.string().optional(),
   nextPlan: z.string().optional(),
   remarks: z.string().optional(),
