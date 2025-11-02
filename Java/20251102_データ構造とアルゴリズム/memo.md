@@ -27,6 +27,9 @@ map.put(key, value);　// key,valueを追加する
 map.get(key); // valueを取得する
 ```
 
+#### 計算量
+O(n)
+
 ### 2.文字列から繰り返されない最初の文字
 ```bash
 duplicateされていない文字を出力する
@@ -38,7 +41,9 @@ duplicateされていない文字を出力する
 ```java
 for(char c : s.toCharArray())
 ```
-
+#### 計算量
+O(2n) = O(n) 
+※ 係数は省く
 
 ## 課題・問題点  
 
