@@ -6,7 +6,9 @@
 ```bash
 A={1,2,3,4} B={2,3,4,5} -> AかつB={2,3,4}
 ```
-
+#### Big-O Runtime and Space Complexity Analysis
+runtime: O(3n) -> O(n)
+space complexity: O(n)
 
 ## 実装内容・学んだ技術  
 
