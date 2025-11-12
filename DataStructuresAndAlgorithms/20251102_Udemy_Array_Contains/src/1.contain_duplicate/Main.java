@@ -1,6 +1,9 @@
-/* QUESTION
-* Given nums[1,2,3,1], return true if there are duplicate items
+/**
+ * お題① nums配列の中で、重複があった場合にtrueを,それ以外の場合にfalseを出力する
+ * 例: nums　= {1,2,3,1}, return true
+ * 例: nums　= {1,2,3,4}, return false
 */
+
 import java.util.*;
 public class Main {
 
@@ -13,13 +16,13 @@ public class Main {
         if (nums.length <= 1) return false;
         
         Map <Integer, Boolean> map = new HashMap<>();
-        // step1: 単方向に検索する
+        // step1: linear scan
         for(int num: nums){
 
-            // step2-1: map.contain(nums[i]) == trueでdupだったらreturn true
+            // step2-1: map.containsKey(nums[i]) == trueでdupだったらreturn true
             if(map.containsKey(num)) return true;
 
-            // step2-2: map.contain(nums[i]) == falseだったらmapにinsertする
+            // step2-2: map.containsKey(nums[i]) == falseだったらmapにinsertする
             map.put(num, true);
         }
         // retrun false
@@ -34,6 +37,18 @@ public class Main {
         System.out.println(result);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ネストするとｎの２乗回の検索回数になるのでパフォーマンス悪い
 
