@@ -41,8 +41,8 @@ function run() {
   const r1: Rectangle = new Rectangle();
   const r2: Rectangle = new Square();
 
-  console.log(f(r1, 3, 4));
-  console.log(f(r2, 3, 4));
+  console.log(f(r1, 3, 4)); // 12
+  console.log(f(r2, 3, 4)); // 16 (期待値12)
 }
 
 run();
