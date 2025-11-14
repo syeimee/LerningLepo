@@ -22,10 +22,10 @@ class Employee {
 
   private getRegularHours() {
     // 仕様変更前
-    console.log('経理部門・人事部門共通のロジック');
+    // console.log('経理部門・人事部門共通のロジック');
 
     // 仕様変更後
-    // console.log('経理部門の仕様変更済み');
+    console.log('経理部門の仕様変更済み');
   }
 }
 
