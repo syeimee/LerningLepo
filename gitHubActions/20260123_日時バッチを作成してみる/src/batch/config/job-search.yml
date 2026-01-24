@@ -1,0 +1,24 @@
+jobSearches:
+  - name: "GoogleAppScript"
+    keywords: ["GAS 案件", "GoogleAppScript 募集"]
+    enabled: true
+  - name: "React"
+    keywords: ["React 案件", "React.js 募集"]
+    enabled: true
+  - name: "Ruby"
+    keywords: ["Ruby 案件", "Ruby on Rails 募集"]
+    enabled: true
+
+nitterInstances:
+  - "https://xcancel.com"
+  - "https://nitter.privacydev.net"
+
+maxResultsPerSearch: 5
+
+news:
+  zenn:
+    enabled: true
+    maxArticles: 5
+  qiita:
+    enabled: true
+    maxArticles: 5

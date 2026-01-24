@@ -1,0 +1,24 @@
+{
+  "name": "line-messaging-batch",
+  "version": "1.0.0",
+  "description": "LINE Messaging APIで通知を送信する日時バッチ",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "build": "tsc",
+    "dev": "ts-node src/index.ts",
+    "send-only": "ts-node src/sendLine.ts"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3",
+    "googleapis": "^144.0.0",
+    "cheerio": "^1.0.0",
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/js-yaml": "^4.0.9"
+  }
+}

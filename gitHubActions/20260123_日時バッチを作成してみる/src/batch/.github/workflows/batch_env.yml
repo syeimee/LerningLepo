@@ -1,0 +1,40 @@
+name: LINE Messaging API Cron (TS)
+
+on:
+  schedule:
+    # JST 9:00 (UTC 0:00)
+    - cron: '0 0 * * *'
+    # JST 12:00 (UTC 3:00)
+    - cron: '0 3 * * *'
+    # JST 16:00 (UTC 7:00)
+    - cron: '0 7 * * *'
+    # JST 20:00 (UTC 11:00)
+    - cron: '0 11 * * *'
+  workflow_dispatch:
+
+jobs:
+  send_line_message:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run batch script
+        env:
+          LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
+          LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
+          GOOGLE_SERVICE_ACCOUNT_KEY: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
+          GOOGLE_CALENDAR_ID: ${{ secrets.GOOGLE_CALENDAR_ID }}
+          QIITA_ACCESS_TOKEN: ${{ secrets.QIITA_ACCESS_TOKEN }}
+        run: npx ts-node src/index.ts
+
