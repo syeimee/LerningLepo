@@ -8,8 +8,6 @@
 
 ## 実装内容・学んだ技術  
 
-https://atcoder.jp/contests/abc444/tasks/abc444_a
-
 
 ## 課題・問題点  
 
