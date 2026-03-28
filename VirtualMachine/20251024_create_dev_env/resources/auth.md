@@ -57,24 +57,27 @@ mkdir -p traefik/auth
 ### 2.3 ユーザーとパスワードの生成
 
 ```bash
+# 強力なパスワードを生成
+openssl rand -base64 32
+
 # 開発者A用（最初のユーザーは -c オプションでファイル作成）
-htpasswd -bc traefik/auth/app-a-users developerA passwordA
+htpasswd -bc traefik/auth/app-a-users developerA $(openssl rand -base64 16)
 
 # 開発者B用
-htpasswd -bc traefik/auth/app-b-users developerB passwordB
+htpasswd -bc traefik/auth/app-b-users developerB $(openssl rand -base64 16)
 
 # 開発者C用
-htpasswd -bc traefik/auth/app-c-users developerC passwordC
+htpasswd -bc traefik/auth/app-c-users developerC $(openssl rand -base64 16)
 
 # 管理者用（すべてにアクセス可能）
-htpasswd -bc traefik/auth/admin-users admin adminPassword
+htpasswd -bc traefik/auth/admin-users admin $(openssl rand -base64 16)
 
 # データベース管理者用
-htpasswd -bc traefik/auth/db-users dbadmin dbPassword
+htpasswd -bc traefik/auth/db-users dbadmin $(openssl rand -base64 16)
 ```
 
 **パスワードについて:**
-- 上記は例です。実際には強力なパスワードを使用してください
+- 上記のようにopenssl rand等で強力なパスワードを生成してください
 - `-b`オプション: コマンドラインでパスワードを指定
 - `-c`オプション: ファイルを新規作成
 
@@ -435,7 +438,7 @@ curl -H "Host: app-a.localhost" http://localhost
 
 ```bash
 # 開発者AでアプリケーションAにアクセス（成功）
-curl -u developerA:passwordA -H "Host: app-a.localhost" http://localhost
+curl -u developerA:<password> -H "Host: app-a.localhost" http://localhost
 
 # 期待される出力: HTMLコンテンツ
 ```
@@ -444,7 +447,7 @@ curl -u developerA:passwordA -H "Host: app-a.localhost" http://localhost
 
 ```bash
 # 開発者BでアプリケーションAにアクセス（失敗）
-curl -u developerB:passwordB -H "Host: app-a.localhost" http://localhost
+curl -u developerB:<password> -H "Host: app-a.localhost" http://localhost
 
 # 期待される出力: 401 Unauthorized
 ```
@@ -453,19 +456,19 @@ curl -u developerB:passwordB -H "Host: app-a.localhost" http://localhost
 
 ```bash
 # 開発者A: アプリAのみアクセス可能
-curl -u developerA:passwordA -H "Host: app-a.localhost" http://localhost  # ✓ 成功
-curl -u developerA:passwordA -H "Host: app-b.localhost" http://localhost  # ✗ 失敗
-curl -u developerA:passwordA -H "Host: app-c.localhost" http://localhost  # ✗ 失敗
+curl -u developerA:<password> -H "Host: app-a.localhost" http://localhost  # ✓ 成功
+curl -u developerA:<password> -H "Host: app-b.localhost" http://localhost  # ✗ 失敗
+curl -u developerA:<password> -H "Host: app-c.localhost" http://localhost  # ✗ 失敗
 
 # 開発者B: アプリBのみアクセス可能
-curl -u developerB:passwordB -H "Host: app-b.localhost" http://localhost  # ✓ 成功
-curl -u developerB:passwordB -H "Host: app-a.localhost" http://localhost  # ✗ 失敗
-curl -u developerB:passwordB -H "Host: app-c.localhost" http://localhost  # ✗ 失敗
+curl -u developerB:<password> -H "Host: app-b.localhost" http://localhost  # ✓ 成功
+curl -u developerB:<password> -H "Host: app-a.localhost" http://localhost  # ✗ 失敗
+curl -u developerB:<password> -H "Host: app-c.localhost" http://localhost  # ✗ 失敗
 
 # 開発者C: アプリCのみアクセス可能
-curl -u developerC:passwordC -H "Host: app-c.localhost" http://localhost  # ✓ 成功
-curl -u developerC:passwordC -H "Host: app-a.localhost" http://localhost  # ✗ 失敗
-curl -u developerC:passwordC -H "Host: app-b.localhost" http://localhost  # ✗ 失敗
+curl -u developerC:<password> -H "Host: app-c.localhost" http://localhost  # ✓ 成功
+curl -u developerC:<password> -H "Host: app-a.localhost" http://localhost  # ✗ 失敗
+curl -u developerC:<password> -H "Host: app-b.localhost" http://localhost  # ✗ 失敗
 ```
 
 ---
@@ -479,7 +482,7 @@ curl -u developerC:passwordC -H "Host: app-b.localhost" http://localhost  # ✗ 
 3. 以下の情報を入力：
    ```
    ユーザー名: developerA
-   パスワード: passwordA
+   パスワード: <設定したパスワード>
    ```
 4. 「OK」をクリック
 5. アプリケーションAのページが表示される ✓
@@ -487,7 +490,7 @@ curl -u developerC:passwordC -H "Host: app-b.localhost" http://localhost  # ✗ 
 **間違った認証情報の場合:**
 ```
 ユーザー名: developerB
-パスワード: passwordB
+パスワード: <developerBのパスワード>
 ```
 → 「401 Unauthorized」エラーが表示される
 
@@ -497,7 +500,7 @@ curl -u developerC:passwordC -H "Host: app-b.localhost" http://localhost  # ✗ 
 2. 認証ダイアログで以下を入力：
    ```
    ユーザー名: developerB
-   パスワード: passwordB
+   パスワード: <設定したパスワード>
    ```
 3. アプリケーションBのページが表示される ✓
 
@@ -507,7 +510,7 @@ curl -u developerC:passwordC -H "Host: app-b.localhost" http://localhost  # ✗ 
 2. 認証ダイアログで以下を入力：
    ```
    ユーザー名: developerC
-   パスワード: passwordC
+   パスワード: <設定したパスワード>
    ```
 3. アプリケーションCのページが表示される ✓
 
@@ -517,7 +520,7 @@ curl -u developerC:passwordC -H "Host: app-b.localhost" http://localhost  # ✗ 
 2. 認証ダイアログで以下を入力：
    ```
    ユーザー名: admin
-   パスワード: adminPassword
+   パスワード: <設定したパスワード>
    ```
 3. Traefikダッシュボードが表示される ✓
 4. ミドルウェアが正しく設定されているか確認
@@ -528,7 +531,7 @@ curl -u developerC:passwordC -H "Host: app-b.localhost" http://localhost  # ✗ 
 2. 認証ダイアログで以下を入力：
    ```
    ユーザー名: dbadmin
-   パスワード: dbPassword
+   パスワード: <設定したパスワード>
    ```
 3. Adminerのログイン画面が表示される ✓
 
@@ -540,7 +543,7 @@ curl -u developerC:passwordC -H "Host: app-b.localhost" http://localhost  # ✗ 
 
 ```bash
 # アプリAのユーザーのパスワードを変更
-htpasswd -b traefik/auth/app-a-users developerA newPasswordA
+htpasswd -b traefik/auth/app-a-users developerA $(openssl rand -base64 16)
 
 # 変更を反映（Traefikが自動で検出）
 # ファイル監視が有効なので、再起動は不要
@@ -550,7 +553,7 @@ htpasswd -b traefik/auth/app-a-users developerA newPasswordA
 
 ```bash
 # アプリAに新しいユーザーを追加（-cオプションは付けない）
-htpasswd -b traefik/auth/app-a-users developerA2 passwordA2
+htpasswd -b traefik/auth/app-a-users developerA2 $(openssl rand -base64 16)
 
 # 確認
 cat traefik/auth/app-a-users
@@ -576,9 +579,9 @@ cat traefik/auth/app-a-users
 
 ```bash
 # チームA用（複数の開発者）
-htpasswd -bc traefik/auth/team-a-users dev1 password1
-htpasswd -b traefik/auth/team-a-users dev2 password2
-htpasswd -b traefik/auth/team-a-users dev3 password3
+htpasswd -bc traefik/auth/team-a-users dev1 $(openssl rand -base64 16)
+htpasswd -b traefik/auth/team-a-users dev2 $(openssl rand -base64 16)
+htpasswd -b traefik/auth/team-a-users dev3 $(openssl rand -base64 16)
 ```
 
 ### 10.2 ミドルウェアの追加
@@ -691,7 +694,7 @@ cat traefik/auth/app-a-users
 ls -l traefik/auth/
 
 # パスワードを再生成
-htpasswd -bc traefik/auth/app-a-users developerA passwordA
+htpasswd -bc traefik/auth/app-a-users developerA $(openssl rand -base64 16)
 ```
 
 ### ミドルウェアが適用されない

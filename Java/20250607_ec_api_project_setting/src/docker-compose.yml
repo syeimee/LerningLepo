@@ -13,10 +13,10 @@ services:
     container_name: ec_app-mysql  # コンテナ名
     restart: always  # コンテナが停止しても常に再起動する
     environment:
-      MYSQL_ROOT_PASSWORD: rootpass     # rootユーザーのパスワード
-      MYSQL_DATABASE: ec_db             # 作成する初期データベース名
-      MYSQL_USER: user                  # 通常ユーザー名
-      MYSQL_PASSWORD: userpass          # 通常ユーザーのパスワード
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}     # rootユーザーのパスワード
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-ec_db}        # 作成する初期データベース名
+      MYSQL_USER: ${MYSQL_USER}                       # 通常ユーザー名
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}               # 通常ユーザーのパスワード
     ports:
       - "3306:3306"  # ホストの3306ポートをMySQLに割り当て（ポートが競合しないよう注意）
     volumes:
@@ -36,6 +36,6 @@ services:
       - "8080:8080"  # Spring Bootのポートをホストに公開
     environment:
       # Spring Boot にMySQL接続情報を環境変数として渡す
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/ec_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-      SPRING_DATASOURCE_USERNAME: user
-      SPRING_DATASOURCE_PASSWORD: userpass
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/${MYSQL_DATABASE:-ec_db}?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}

@@ -33,3 +33,21 @@ Unity/**/*.xcodeproj
 
 # 環境変数ファイル
 .env
+.env.local
+.env.*.local
+*.env
+
+# IDE設定
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# データベース
+*.sqlite
+*.sqlite3
