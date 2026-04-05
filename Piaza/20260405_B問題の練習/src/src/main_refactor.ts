@@ -19,7 +19,7 @@ function run() {
         }
         const chocoCount = calcChocoCount(directions, grid, startPos);
 
-        console.log(calcChocoCount.join("\n"));
+        console.log(chocoCount.join("\n"));
     })
 
 }
